@@ -1,0 +1,25 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.env
+
+# --- Node / frontend build ---
+node_modules/
+web/atlas/*.local.*
+
+# --- SuperResearcher runtime data ---
+research_runs/
+.models/
+api_keys.txt
+*.log
+
+# --- macOS / editors ---
+.DS_Store
+.idea/
+.vscode/
+*.swp

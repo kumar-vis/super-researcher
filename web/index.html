@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>🤿 Challenger Deep</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <h1>Challenger Deep 🤿</h1>
+          <p class="subtle">Research that holds its depth.</p>
+        </div>
+        <div class="topbar-actions">
+          <nav class="tabs" aria-label="Research stages">
+            <button type="button" id="scopeTabButton" class="active">Scope</button>
+            <button type="button" id="mapTabButton">Map</button>
+            <button type="button" id="curateTabButton">Curate</button>
+            <button type="button" id="composeTabButton">Compose</button>
+            <button type="button" id="publishTabButton">Compile</button>
+            <button type="button" id="pulbishTabButton">Publish</button>
+          </nav>
+          <div class="theme-toggle" aria-label="Theme">
+            <button type="button" id="lightThemeButton" class="active" aria-label="Light theme" title="Light theme">
+              <span aria-hidden="true">☀</span>
+            </button>
+            <button type="button" id="darkThemeButton" aria-label="Dark theme" title="Dark theme">
+              <span aria-hidden="true">☾</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <section class="layout" id="scopeTab">
+        <form id="runForm" class="panel form-panel">
+          <div class="field">
+            <label for="topic">Research topic</label>
+            <textarea id="topic" name="topic" rows="4" required placeholder="Example: AI agents for enterprise finance operations"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="context">Research context</label>
+            <textarea id="context" name="context" rows="3" placeholder="Why this matters, audience, decision context"></textarea>
+          </div>
+
+          <div class="control-grid">
+            <div class="field">
+              <label>Depth</label>
+              <div class="segmented" data-name="depth">
+                <button type="button" data-value="low">Low</button>
+                <button type="button" data-value="medium">Medium</button>
+                <button type="button" data-value="high" class="active">High</button>
+                <button type="button" data-value="extra_high">Extra high</button>
+                <button type="button" data-value="ludicrous">Ludicrous</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Breadth</label>
+              <div class="segmented" data-name="breadth">
+                <button type="button" data-value="low">Low</button>
+                <button type="button" data-value="medium">Medium</button>
+                <button type="button" data-value="high" class="active">High</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-grid compact">
+            <div class="field">
+              <label for="finalSourceCount">Final sources</label>
+              <input id="finalSourceCount" name="final_source_count" type="number" min="1" max="500" value="120">
+            </div>
+            <div class="field">
+              <label for="storageRoot">Storage root</label>
+              <input id="storageRoot" name="storage_root" type="text">
+            </div>
+          </div>
+
+          <details class="advanced">
+            <summary>Scope controls</summary>
+            <div class="control-grid compact">
+              <div class="field">
+                <label for="audience">Audience</label>
+                <input id="audience" name="audience" type="text" placeholder="Executives, founders, engineers">
+              </div>
+              <div class="field">
+                <label for="geographicScope">Geographic scope</label>
+                <input id="geographicScope" name="geographic_scope" type="text" placeholder="Global, US, EU, India">
+              </div>
+              <div class="field">
+                <label for="timeHorizon">Time horizon</label>
+                <input id="timeHorizon" name="time_horizon" type="text" placeholder="Current state plus 3-5 year outlook">
+              </div>
+              <div class="field">
+                <label for="objective">Objective</label>
+                <input id="objective" name="objective" type="text" placeholder="Decision-grade corpus for strategy memo">
+              </div>
+            </div>
+            <div class="control-grid compact">
+              <div class="field">
+                <label for="mustInclude">Must include</label>
+                <textarea id="mustInclude" name="must_include" rows="2"></textarea>
+              </div>
+              <div class="field">
+                <label for="mustExclude">Must exclude</label>
+                <textarea id="mustExclude" name="must_exclude" rows="2"></textarea>
+              </div>
+              <div class="field">
+                <label for="preferredSources">Preferred sources</label>
+                <textarea id="preferredSources" name="preferred_sources" rows="2"></textarea>
+              </div>
+              <div class="field">
+                <label for="disallowedSources">Disallowed sources</label>
+                <textarea id="disallowedSources" name="disallowed_sources" rows="2"></textarea>
+              </div>
+            </div>
+          </details>
+
+          <div class="estimate" id="estimate">
+            <div><span>Results/query</span><strong id="estimateDepth">10</strong></div>
+            <div><span>Planning levels</span><strong id="estimateBreadth">5</strong></div>
+            <div><span>Final target</span><strong id="estimateSources">120</strong></div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="primary">Start research run</button>
+            <span id="formError" class="error"></span>
+          </div>
+        </form>
+
+        <section class="panel progress-panel">
+          <div class="progress-head">
+            <div>
+              <h2>Run progress</h2>
+              <p id="runTitle" class="subtle">No active run</p>
+            </div>
+            <div id="runState" class="state idle">Idle</div>
+          </div>
+
+          <div class="meter">
+            <div id="progressBar"></div>
+          </div>
+
+          <div class="metric-grid">
+            <div><span>Milestone</span><strong id="milestone">Queued</strong></div>
+            <div><span>Candidates</span><strong id="candidateCount">0</strong></div>
+            <div><span>Selected</span><strong id="selectedCount">0</strong></div>
+            <div><span>Quality</span><strong id="qualityVerdict">-</strong></div>
+          </div>
+
+          <div class="output-block">
+            <h3>Dossier</h3>
+            <p id="dossierPath" class="path">-</p>
+          </div>
+
+          <div class="output-block">
+            <h3>Artifacts</h3>
+            <div id="fileList" class="file-list"></div>
+          </div>
+
+          <div class="output-block">
+            <h3>Recent updates</h3>
+            <div id="eventLog" class="event-log"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="atlas-view" id="mapTab" hidden>
+        <div class="atlas-toolbar panel">
+          <div class="field atlas-corpus">
+            <label for="corpusSelect">Corpus</label>
+            <select id="corpusSelect"></select>
+          </div>
+          <button type="button" id="refreshCorpora">Refresh</button>
+          <button type="button" id="postprocessCorpus">Post-process</button>
+          <button type="button" class="primary" id="buildAtlas">Build Atlas</button>
+          <label class="checkbox-label">
+            <input type="checkbox" id="forceAtlasBuild">
+            Force rebuild
+          </label>
+          <div class="state idle" id="atlasStatus">Idle</div>
+        </div>
+
+        <div class="atlas-dependency" id="atlasDependency" hidden></div>
+
+        <div class="atlas-progress panel">
+          <div class="progress-head">
+            <div>
+              <h2>Atlas build</h2>
+              <p id="atlasStage" class="subtle">Select a corpus to begin.</p>
+            </div>
+            <div class="atlas-counts" id="atlasCounts">0 chunks</div>
+          </div>
+          <div class="meter">
+            <div id="atlasProgressBar"></div>
+          </div>
+        </div>
+
+        <div class="atlas-workspace">
+          <section class="atlas-map panel">
+            <div id="atlasEmbeddingMount" class="atlas-embedding-mount" hidden></div>
+            <canvas id="atlasCanvas"></canvas>
+            <div class="atlas-empty" id="atlasEmpty">Build an atlas to visualize Markdown chunks.</div>
+            <div class="atlas-hover" id="atlasHover" hidden></div>
+          </section>
+
+          <aside class="atlas-inspector panel">
+            <div id="chunkInspector">
+              <h2>Chunk inspector</h2>
+              <p class="subtle">Click a point to inspect text, metadata, and curation state.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="curate-view" id="curateTab" hidden>
+        <div class="curate-toolbar panel">
+          <div>
+            <h2>Curate topics</h2>
+            <p id="curateCorpus" class="subtle">Select a corpus in Map first.</p>
+          </div>
+          <div class="curate-actions">
+            <button type="button" id="runTopicDiscovery">Run Topic Discovery</button>
+            <button type="button" id="selectAllTopics">Select all</button>
+            <button type="button" id="selectNoTopics">Select none</button>
+            <button type="button" id="expandAllTopics">Expand all</button>
+            <button type="button" id="collapseAllTopics">Collapse all</button>
+            <button type="button" class="primary" id="saveCuratedTopics">Save curated tree</button>
+          </div>
+        </div>
+
+        <div class="curate-progress panel">
+          <div class="progress-head">
+            <div>
+              <h2>Topic discovery</h2>
+              <p id="topicStage" class="subtle">Run topic discovery after the Atlas is built.</p>
+            </div>
+            <div class="state idle" id="topicStatus">Idle</div>
+          </div>
+          <div class="meter">
+            <div id="topicProgressBar"></div>
+          </div>
+        </div>
+
+        <div class="curate-editor panel">
+          <div id="topicTreeEmpty" class="curate-empty">No topic tree yet.</div>
+          <div id="topicTree" class="topic-tree"></div>
+        </div>
+      </section>
+      <section class="compose-view" id="composeTab" hidden>
+        <div class="compose-toolbar panel">
+          <div>
+            <h2>Compose terms</h2>
+            <p id="composeCorpus" class="subtle">Select a corpus in Map first.</p>
+          </div>
+          <div class="compose-actions">
+            <button type="button" id="generateComposeTerms" class="primary">Generate terms</button>
+            <button type="button" id="regenerateComposeTerms">Regenerate</button>
+            <button type="button" id="refineComposeTerms">Refine</button>
+            <button type="button" id="undoRefineComposeTerms">Undo refine</button>
+            <span class="compose-refine-count" id="composeRefineCount">0/5</span>
+            <button type="button" id="finalizeComposeTerms">Finalize</button>
+            <div class="state idle" id="composeStatus">Idle</div>
+          </div>
+        </div>
+
+        <div class="compose-progress panel">
+          <div class="progress-head">
+            <div>
+              <h2>Query-term preparation</h2>
+              <p id="composeStage" class="subtle">Generate terms from curated subtopics.</p>
+            </div>
+            <div class="compose-counts">
+              <span id="composeSubtopicCount">0 subtopics</span>
+              <span id="composeTagCount">0 tags</span>
+            </div>
+          </div>
+          <div class="meter">
+            <div id="composeProgressBar"></div>
+          </div>
+        </div>
+
+        <div class="compose-workspace">
+          <aside class="compose-subtopics panel">
+            <h2>Subtopics</h2>
+            <div id="composeSubtopicList" class="compose-subtopic-list"></div>
+          </aside>
+          <section class="compose-tags panel">
+            <div id="composeEmpty" class="compose-empty">No generated terms yet.</div>
+            <div id="composeTagGroups" class="compose-tag-groups"></div>
+          </section>
+        </div>
+      </section>
+      <section class="publish-view" id="publishTab" hidden>
+        <div class="publish-toolbar panel">
+          <div>
+            <h2>Compile paper</h2>
+            <p id="publishCorpus" class="subtle">Select a corpus in Map first.</p>
+          </div>
+          <div class="publish-actions">
+            <button type="button" id="planPublishPaper">Plan TOC</button>
+            <button type="button" class="primary" id="compilePublishPaper">Compile paper</button>
+            <label class="checkbox-label">
+              <input type="checkbox" id="forcePublishPlan">
+              Rebuild TOC
+            </label>
+            <div class="state idle" id="publishStatus">Idle</div>
+          </div>
+        </div>
+
+        <div class="publish-progress panel">
+          <div class="progress-head">
+            <div>
+              <h2>Compilation</h2>
+              <p id="publishStage" class="subtle">Finalize Compose terms before publishing.</p>
+            </div>
+            <div class="compose-counts">
+              <span id="publishSectionCount">0 sections</span>
+              <span id="publishCompletedCount">0 complete</span>
+            </div>
+          </div>
+          <div class="meter">
+            <div id="publishProgressBar"></div>
+          </div>
+        </div>
+
+        <section class="publish-visuals panel">
+          <button type="button" class="collapse-trigger" id="togglePublishVisuals" aria-expanded="false">
+            <span>
+              <strong>Visual Evidence</strong>
+              <small id="publishVisualSummary">Not built</small>
+            </span>
+            <span aria-hidden="true">▾</span>
+          </button>
+          <div class="collapse-body" id="publishVisualBody" hidden>
+            <div class="visual-toolbar">
+              <div class="field visual-section-field">
+                <label for="publishVisualSectionFilter">Section</label>
+                <select id="publishVisualSectionFilter"></select>
+              </div>
+              <div class="field visual-section-field">
+                <label for="publishVisualTextFilter">Text</label>
+                <select id="publishVisualTextFilter">
+                  <option value="all">All visible</option>
+                  <option value="text_extracted">Text extracted</option>
+                  <option value="table_text_extracted">Likely table text extracted</option>
+                  <option value="no_extracted_text">No extracted text found</option>
+                </select>
+              </div>
+              <button type="button" id="buildPublishVisuals">Find images</button>
+              <button type="button" class="primary" id="savePublishVisuals">Save selections</button>
+              <div class="state idle" id="publishVisualStatus">Idle</div>
+            </div>
+            <div id="publishVisualEmpty" class="compose-empty">Open a corpus and build image candidates.</div>
+            <div id="publishVisualList" class="publish-visual-list"></div>
+          </div>
+        </section>
+
+        <div class="publish-text-shell">
+          <button type="button" class="collapse-trigger text-trigger" id="togglePublishText" aria-expanded="true">
+            <span>
+              <strong>Text Compilation</strong>
+              <small>TOC prompts and generated section files</small>
+            </span>
+            <span aria-hidden="true">▾</span>
+          </button>
+          <div class="publish-workspace" id="publishTextBody">
+            <aside class="publish-toc panel">
+              <h2>Table of contents</h2>
+              <div id="publishTocEmpty" class="compose-empty">No publish plan yet.</div>
+              <div id="publishTocList" class="publish-toc-list"></div>
+            </aside>
+            <section class="publish-sections panel">
+              <div class="publish-paper-path">
+                <h2>Output</h2>
+                <p id="publishPaperPath" class="path">-</p>
+              </div>
+              <div id="publishSectionList" class="publish-section-list"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+      <section class="report-view" id="pulbishTab" hidden>
+        <div class="report-toolbar panel">
+          <div>
+            <h2>Publish report</h2>
+            <p id="reportCorpus" class="subtle">Select a corpus in Map first.</p>
+          </div>
+          <div class="report-actions">
+            <button type="button" id="refreshReportPreview">Preview</button>
+            <button type="button" class="primary" id="publishReportButton">Publish</button>
+            <div class="state idle" id="reportStatus">Idle</div>
+          </div>
+        </div>
+
+        <div class="report-workspace">
+          <aside class="report-controls panel">
+            <div class="field">
+              <label for="reportTemplateSelect">Template</label>
+              <select id="reportTemplateSelect"></select>
+              <p id="reportTemplateDescription" class="report-template-description"></p>
+            </div>
+
+            <div class="report-detail-fields">
+              <h3>Report details</h3>
+              <div class="field">
+                <label for="reportMetaTitle">Title</label>
+                <input id="reportMetaTitle" type="text" data-report-meta="title">
+              </div>
+              <div class="field">
+                <label for="reportMetaSubtitle">Subtitle</label>
+                <input id="reportMetaSubtitle" type="text" data-report-meta="subtitle">
+              </div>
+              <div class="field">
+                <label for="reportMetaAuthors">Authors</label>
+                <input id="reportMetaAuthors" type="text" data-report-meta="authors">
+              </div>
+              <div class="field">
+                <label for="reportMetaOrganization">Organization</label>
+                <input id="reportMetaOrganization" type="text" data-report-meta="organization">
+              </div>
+              <div class="field">
+                <label for="reportMetaDate">Date</label>
+                <input id="reportMetaDate" type="text" data-report-meta="date">
+              </div>
+              <div class="field">
+                <label for="reportMetaWebsite">Website</label>
+                <input id="reportMetaWebsite" type="text" data-report-meta="website">
+              </div>
+              <div class="field">
+                <label for="reportMetaLogo">Logo path</label>
+                <input id="reportMetaLogo" type="text" data-report-meta="logo_path">
+              </div>
+              <div class="field">
+                <label for="reportMetaCover">Cover image path</label>
+                <input id="reportMetaCover" type="text" data-report-meta="cover_image_path">
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Formats</label>
+              <div class="format-options">
+                <label class="checkbox-label"><input type="checkbox" data-report-format="pdf" checked> PDF</label>
+                <label class="checkbox-label"><input type="checkbox" data-report-format="html" checked> HTML</label>
+                <label class="checkbox-label"><input type="checkbox" data-report-format="docx"> DOCX</label>
+                <label class="checkbox-label"><input type="checkbox" data-report-format="latex"> LaTeX</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="reportOutputDir">Output directory</label>
+              <input id="reportOutputDir" type="text">
+            </div>
+
+            <div class="report-meta">
+              <span>Compiled paper</span>
+              <p id="reportPaperPath" class="path">-</p>
+            </div>
+
+            <div id="reportWarnings" class="report-warning-list"></div>
+            <div id="reportOutputs" class="report-output-list"></div>
+          </aside>
+
+          <section class="report-preview panel">
+            <div class="report-preview-head">
+              <div>
+                <h2>Preview</h2>
+                <p id="reportPreviewPath" class="subtle">No preview yet.</p>
+              </div>
+            </div>
+            <div id="reportPreviewEmpty" class="compose-empty">Compile paper before publishing.</div>
+            <div id="reportPreviewLoading" class="report-preview-loading" hidden>
+              <div class="report-preview-loading-head">
+                <strong id="reportPreviewLoadingTitle">Loading preview...</strong>
+                <span id="reportPreviewLoadingPercent">0%</span>
+              </div>
+              <div class="report-preview-loading-track">
+                <div id="reportPreviewLoadingBar"></div>
+              </div>
+              <p id="reportPreviewLoadingDetail">Rendering selected template into PDF preview pages.</p>
+            </div>
+            <div id="reportPreviewPages" class="report-preview-pages" hidden></div>
+            <iframe id="reportPreviewFrame" title="Report preview" sandbox=""></iframe>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="confirmModal" hidden>
+      <div class="modal">
+        <h2>Confirm large run</h2>
+        <p id="confirmText"></p>
+        <div class="modal-actions">
+          <button type="button" id="cancelLargeRun">Cancel</button>
+          <button type="button" class="primary" id="continueLargeRun">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="image-peek-backdrop" id="imagePeek" hidden role="dialog" aria-modal="true" aria-label="Image preview">
+      <button type="button" class="image-peek-close" id="closeImagePeek" aria-label="Close image preview">×</button>
+      <img id="imagePeekImage" alt="">
+      <div class="image-peek-meta" id="imagePeekMeta"></div>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

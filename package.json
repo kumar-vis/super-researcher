@@ -1,0 +1,20 @@
+{
+  "name": "superresearcher",
+  "version": "0.2.0",
+  "description": "Local UI and corpus builder for Phase 1 and Phase 2.",
+  "main": "index.js",
+  "scripts": {
+    "build:atlas": "vite build",
+    "test": "python3 -m unittest discover -s tests"
+  },
+  "keywords": [],
+  "author": "Vishal Kumar",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "embedding-atlas": "^0.20.0"
+  },
+  "devDependencies": {
+    "vite": "^8.0.14"
+  }
+}

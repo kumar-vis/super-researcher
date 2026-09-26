@@ -1,0 +1,7 @@
+# Core: zero third-party dependencies (Python 3.10+ stdlib only).
+
+# Optional extras (install what you need):
+#   Atlas embeddings/projection:  pip install -r requirements-atlas.txt
+#   PDF extraction:               pip install pymupdf
+#   HTML parsing:                 pip install beautifulsoup4 lxml
+#   PDF export of reports:        pip install pypandoc-binary   (plus pandoc/xelatex/weasyprint on the system)

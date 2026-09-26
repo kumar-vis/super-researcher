@@ -1,0 +1,95 @@
+# SuperResearcher 🦸
+
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-80%20passing-brightgreen)]()
+
+**Commission a junior research analyst, not a quick AI essay.** SuperResearcher is a local-first evidence research system: it plans the research protocol, discovers and downloads real sources, builds a durable corpus with readable sidecars, maps it in an embedding Atlas, and compiles publishable reports — with progress updates every 5 minutes, milestone events, and honest quality verdicts (Pass / Pass with warnings / Fail).
+
+## How it works
+
+```
+Topic → Phase 1: Research Protocol → Phase 2: Discover → Download → Dedupe → Rank
+        → Corpus (originals + Markdown sidecars + metadata)
+        → Post-process (repair) → Atlas (embed, map, curate) → Publish (paper/report)
+```
+
+- **Phase 1** — research protocol: topic, context, controls, archetype classification, rubric assessment, default assumptions.
+- **Phase 2** — search heuristics, parallel search plan, candidate discovery, source downloads, dedupe, Markdown sidecars, corpus index, quality report.
+- **Post-process** — repairs corpus outputs after acquisition: filename/type mismatches, Markdown sidecar regeneration, targeted re-fetch of wrong payloads, index updates.
+- **Atlas** — chunk Markdown sidecars, embed locally, 2D projection, point inspection, Keep/Reject/Key-Evidence curation.
+- **Topic discovery** — mines tables of contents and Atlas heading paths into a topic/subtopic outline.
+- **Publish** — compiles sections into papers and reports (Markdown, HTML, PDF via pandoc/WeasyPrint/xelatex when installed).
+
+Runs are written under `research_runs/<timestamp-topic>_Corpus/`. Writes are atomic, storage is checked up front (1 GB free required), and LLM planning failure never kills a run.
+
+## Quickstart
+
+Requires Python 3.10+ and Node 18+ (only for building the Atlas frontend bundle).
+
+```bash
+git clone https://github.com/<you>/superresearcher.git
+cd superresearcher
+
+# Optional: search + LLM providers (app works without keys, with fallbacks)
+cp api_keys.example.txt api_keys.txt   # then fill in your keys
+
+# Optional: Atlas embeddings + better PDF extraction
+python3 -m venv .venv && . .venv/bin/activate
+pip install -r requirements-atlas.txt   # embeddings/projection
+pip install pymupdf beautifulsoup4 lxml # PDF extraction
+npm install && npm run build:atlas      # Atlas frontend bundle
+
+python3 run_app.py
+# → http://127.0.0.1:8765
+```
+
+Or install the CLI: `pip install .` then run `superresearcher` (the UI assets are served from the checkout).
+
+### Configuration
+
+| Setting | Where | Default |
+|---|---|---|
+| API keys | `api_keys.txt` (git-ignored) or `SUPERRESEARCHER_API_KEYS` | — |
+| Storage root | `SUPERRESEARCHER_STORAGE_ROOT` | `<repo>/research_runs` |
+| Codex binary | `CODEX_BIN` env, else `codex` on PATH, else Codex.app bundle | auto-detected |
+| Host / port | `--host`, `--port` flags | `127.0.0.1:8765` |
+
+**Providers.** LLM planning tries the local Codex CLI first (high reasoning effort), then Gemini (`GEMINI_API_KEY` or `GOOGLE_API_KEY`). Search/fetch adapters use Exa, Serper, SerpAPI, and Firecrawl when keys are present. Everything degrades gracefully without keys.
+
+**Depth presets** (final source targets): low 3 · medium 7 · high 10 · extra-high 15 · ludicrous 50. Default final-source target 120, max 500.
+
+## Repo layout
+
+```
+superresearcher/        Python package (stdlib-only core)
+  server.py             Plain HTTP server + JSON API (no framework)
+  runner.py / phase1.py / phase2.py
+  search.py / ingest.py / doc_convert.py
+  postprocess.py        Corpus repair pass
+  atlas.py              Embeddings, projection, curation jobs
+  topic_discovery.py    TOC/heading mining
+  publish.py / reporting.py   Report + paper compilation
+  llm.py / prompts.py / config.py
+web/                    Vanilla-JS UI (index.html, app.js, styles.css)
+web/atlas-src/          Atlas frontend source (vite → web/atlas/)
+tests/                  80 unit tests
+docs/                   Product requirements + original build plans
+```
+
+## Tests
+
+```bash
+python3 -m unittest discover -s tests
+```
+
+## Roadmap
+
+- [ ] Background scheduling / watchlists
+- [ ] More search providers
+- [ ] Export corpora as Zotero/RIS
+- [ ] Multi-user / hosted mode
+
+## License
+
+MIT — see [LICENSE](LICENSE).
