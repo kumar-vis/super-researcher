@@ -41,5 +41,9 @@ all = [
 [project.scripts]
 superresearcher = "superresearcher.cli:main"
 
+[project.urls]
+Homepage = "https://github.com/kumar-vis/super-researcher"
+Issues = "https://github.com/kumar-vis/super-researcher/issues"
+
 [tool.setuptools.packages.find]
 include = ["superresearcher*"]

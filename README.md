@@ -28,8 +28,8 @@ Runs are written under `research_runs/<timestamp-topic>_Corpus/`. Writes are ato
 Requires Python 3.10+ and Node 18+ (only for building the Atlas frontend bundle).
 
 ```bash
-git clone https://github.com/<you>/superresearcher.git
-cd superresearcher
+git clone https://github.com/kumar-vis/super-researcher.git
+cd super-researcher
 
 # Optional: search + LLM providers (app works without keys, with fallbacks)
 cp api_keys.example.txt api_keys.txt   # then fill in your keys
