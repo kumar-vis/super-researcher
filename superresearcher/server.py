@@ -13,16 +13,10 @@ from .runner import RUNS, ResearchRun
 from . import atlas, postprocess, publish, query_bundles, reporting, topic_discovery
 
 
-ROOT = Path(__file__).resolve().parents[1]
-
-
 def _web_dir() -> Path:
-    # Prefer a web/ bundled next to the package (pip installs), fall back to
-    # the repo-root web/ used by git checkouts.
-    packaged = Path(__file__).resolve().parent / "web"
-    if (packaged / "index.html").exists():
-        return packaged
-    return ROOT / "web"
+    # UI assets live inside the package, so both pip installs and git
+    # checkouts serve the same files.
+    return Path(__file__).resolve().parent / "web"
 
 
 WEB = _web_dir()

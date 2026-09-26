@@ -44,7 +44,7 @@ python3 run_app.py
 # → http://127.0.0.1:8765
 ```
 
-Or install the CLI: `pip install .` then run `superresearcher` (the UI assets are served from the checkout).
+Or install the CLI: `pip install .` then run `superresearcher` (UI assets ship inside the package).
 
 ### Configuration
 
@@ -71,8 +71,8 @@ superresearcher/        Python package (stdlib-only core)
   topic_discovery.py    TOC/heading mining
   publish.py / reporting.py   Report + paper compilation
   llm.py / prompts.py / config.py
-web/                    Vanilla-JS UI (index.html, app.js, styles.css)
-web/atlas-src/          Atlas frontend source (vite → web/atlas/)
+superresearcher/web/       Vanilla-JS UI (index.html, app.js, styles.css)
+superresearcher/web/atlas-src/  Atlas frontend source (vite → web/atlas/)
 tests/                  80 unit tests
 docs/                   Product requirements + original build plans
 ```

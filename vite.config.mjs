@@ -2,10 +2,10 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
-    outDir: "web/atlas",
+    outDir: "superresearcher/web/atlas",
     emptyOutDir: true,
     lib: {
-      entry: "web/atlas-src/atlas.mjs",
+      entry: "superresearcher/web/atlas-src/atlas.mjs",
       formats: ["es"],
       fileName: () => "atlas.js"
     },

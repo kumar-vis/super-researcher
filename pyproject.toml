@@ -47,3 +47,6 @@ Issues = "https://github.com/kumar-vis/super-researcher/issues"
 
 [tool.setuptools.packages.find]
 include = ["superresearcher*"]
+
+[tool.setuptools.package-data]
+superresearcher = ["web/**/*"]
