@@ -15,6 +15,10 @@ Real reports produced by the harness — see [`outputs/`](outputs/). They replic
 
 What you get: a consulting-style PDF where every claim carries a source citation, and every chart comes from the actual sources.
 
+## 🧭 Guided tour
+
+Opening the app for the first time? Start with the [guided tour](docs/guided-tour/) — nine pages, one per stage, with every setting explained and the reasoning behind it. Available as [PDF](docs/guided-tour/guided-tour.pdf) and [HTML](docs/guided-tour/guided-tour.html).
+
 
 ## How it works
 
