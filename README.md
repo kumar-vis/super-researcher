@@ -4,11 +4,11 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-80%20passing-brightgreen)]()
 
-**Commission a junior research analyst, not a quick AI essay.** SuperResearcher is a local-first evidence research system: it plans the research protocol, discovers and downloads real sources, builds a durable corpus with readable sidecars, maps it in an embedding Atlas, and compiles publishable reports — with progress updates every 5 minutes, milestone events, and honest quality verdicts (Pass / Pass with warnings / Fail).
+**A research harness, not a quick AI essay.** SuperResearcher is a local-first research harness: point it at a topic and it runs the whole research operation — plans the research protocol, discovers and downloads real sources, builds a durable corpus with readable sidecars, maps it in an embedding Atlas, and compiles publishable, consulting-grade reports — with progress updates every 5 minutes, milestone events, and honest quality verdicts (Pass / Pass with warnings / Fail).
 
 ## 📄 Example reports
 
-Real reports produced by SuperResearcher — see [`outputs/`](outputs/). They replicate consulting-grade reports: structured chapters, evidence-backed claims, and charts pulled from the actual sources.
+Real reports produced by the harness — see [`outputs/`](outputs/). They replicate consulting-grade reports: structured chapters, evidence-backed claims, and charts pulled from the actual sources.
 
 - **[Global Migration 1826–2226: A 200-Year Forecast](outputs/global-migration-1826-2226/)** — 51 sections, 395 inline source citations, 32 figures extracted from the source PDFs (McKinsey and Meta Research editions)
 - **[eVTOL UAM Flying Car: Feasibility, Opportunity, Technology, Scaling and Risks](outputs/evtol-uam-flying-car/)** — 54 pages, 55 sections, 367 inline citations, 11 source-extracted figures
