@@ -6,6 +6,16 @@
 
 **Commission a junior research analyst, not a quick AI essay.** SuperResearcher is a local-first evidence research system: it plans the research protocol, discovers and downloads real sources, builds a durable corpus with readable sidecars, maps it in an embedding Atlas, and compiles publishable reports — with progress updates every 5 minutes, milestone events, and honest quality verdicts (Pass / Pass with warnings / Fail).
 
+## 📄 Example reports
+
+Real reports produced by SuperResearcher — see [`outputs/`](outputs/):
+
+- **[Global Migration 1826–2226: A 200-Year Forecast](outputs/global-migration-1826-2226/)** — 51 sections, 395 inline source citations, 32 figures extracted from the source PDFs (McKinsey and Meta Research editions)
+- **[eVTOL UAM Flying Car: Feasibility, Opportunity, Technology, Scaling and Risks](outputs/evtol-uam-flying-car/)** — 54 pages, 55 sections, 367 inline citations, 11 source-extracted figures
+
+What you get: a multi-chapter, citation-dense PDF where the charts come from the actual sources — not generated illustrations.
+
+
 ## How it works
 
 ```
@@ -19,7 +29,7 @@ Topic → Phase 1: Research Protocol → Phase 2: Discover → Download → Dedu
 - **Post-process** — repairs corpus outputs after acquisition: filename/type mismatches, Markdown sidecar regeneration, targeted re-fetch of wrong payloads, index updates.
 - **Atlas** — chunk Markdown sidecars, embed locally, 2D projection, point inspection, Keep/Reject/Key-Evidence curation.
 - **Topic discovery** — mines tables of contents and Atlas heading paths into a topic/subtopic outline.
-- **Publish** — compiles sections into papers and reports (Markdown, HTML, PDF via pandoc/WeasyPrint/xelatex when installed).
+- **Publish** — compiles sections into papers and reports (Markdown, HTML, PDF via pandoc/WeasyPrint/xelatex when installed), with native figure extraction from source PDFs, scored section-matching, and source-attributed figure captions.
 
 Runs are written under `research_runs/<timestamp-topic>_Corpus/`. Writes are atomic, storage is checked up front (1 GB free required), and LLM planning failure never kills a run.
 
@@ -73,6 +83,7 @@ superresearcher/        Python package (stdlib-only core)
   llm.py / prompts.py / config.py
 superresearcher/web/       Vanilla-JS UI (index.html, app.js, styles.css)
 superresearcher/web/atlas-src/  Atlas frontend source (vite → web/atlas/)
+outputs/                Published example reports (PDF)
 tests/                  80 unit tests
 docs/                   Product requirements + original build plans
 ```
