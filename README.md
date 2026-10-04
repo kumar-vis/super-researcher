@@ -8,12 +8,12 @@
 
 ## 📄 Example reports
 
-Real reports produced by SuperResearcher — see [`outputs/`](outputs/):
+Real reports produced by SuperResearcher — see [`outputs/`](outputs/). They replicate consulting-grade reports: structured chapters, evidence-backed claims, and charts pulled from the actual sources.
 
 - **[Global Migration 1826–2226: A 200-Year Forecast](outputs/global-migration-1826-2226/)** — 51 sections, 395 inline source citations, 32 figures extracted from the source PDFs (McKinsey and Meta Research editions)
 - **[eVTOL UAM Flying Car: Feasibility, Opportunity, Technology, Scaling and Risks](outputs/evtol-uam-flying-car/)** — 54 pages, 55 sections, 367 inline citations, 11 source-extracted figures
 
-What you get: a multi-chapter, citation-dense PDF where the charts come from the actual sources — not generated illustrations.
+What you get: a consulting-style PDF where every claim carries a source citation and the charts come from the actual sources — not generated illustrations.
 
 
 ## How it works
