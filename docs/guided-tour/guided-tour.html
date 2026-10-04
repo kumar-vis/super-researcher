@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SuperResearcher — Guided Tour</title>
+<style>
+  @page { size: 1360px 860px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b; background: #fff; line-height: 1.6; font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .screen { width: 1360px; height: 860px; padding: 52px 72px; page-break-after: always; position: relative; overflow: hidden; }
+  .screen:last-child { page-break-after: avoid; }
+
+  .cover { background: #0b1226; color: #f1f5f9; display: flex; flex-direction: column; justify-content: center; }
+  .cover::after { content: ""; position: absolute; inset: 0;
+    background: radial-gradient(1100px 420px at 85% -60px, rgba(37,99,235,.4), transparent 60%); pointer-events: none; }
+  .cover .kicker { display: inline-block; font-size: 14px; letter-spacing: 4px; font-weight: 700; color: #93c5fd;
+    border: 1px solid #2b3a5e; border-radius: 999px; padding: 9px 24px; margin-bottom: 36px;
+    position: relative; z-index: 1; align-self: flex-start; }
+  .cover h1 { font-size: 80px; line-height: 1.06; font-weight: 800; letter-spacing: -2px; position: relative; z-index: 1; }
+  .cover h1 .accent { color: #60a5fa; }
+  .cover p.sub { margin-top: 28px; font-size: 24px; color: #cbd5e1; max-width: 920px; position: relative; z-index: 1; }
+  .cover .meta { margin-top: 44px; font-size: 15px; color: #64748b; position: relative; z-index: 1; }
+  .cover .meta span { margin-right: 30px; }
+
+  .kicker2 { font-size: 13px; letter-spacing: 3px; font-weight: 800; color: #2563eb; margin-bottom: 12px; }
+  .kicker2 .tabtag { color: #fff; background: #0b1226; border-radius: 999px; padding: 3px 14px; letter-spacing: 1px; margin-left: 10px; font-size: 12px; }
+  h2.st { font-size: 40px; letter-spacing: -1.1px; color: #0f172a; margin-bottom: 8px; }
+  p.ssub { color: #64748b; font-size: 17.5px; margin-bottom: 24px; max-width: 1120px; }
+  p.ssub strong { color: #0f172a; }
+
+  .stepper { display: flex; gap: 0; margin-top: 6px; }
+  .stage { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; padding: 24px 20px; margin-left: -1px; }
+  .stage:first-child { border-radius: 16px 0 0 16px; margin-left: 0; }
+  .stage:last-child { border-radius: 0 16px 16px 0; }
+  .stage .n { width: 36px; height: 36px; border-radius: 50%; background: #dbeafe; color: #1d4ed8;
+    font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .stage h3 { font-size: 18px; color: #0f172a; margin-bottom: 5px; }
+  .stage p { font-size: 13.5px; color: #64748b; line-height: 1.55; }
+
+  /* compact setting cards for the Scope page */
+  .cgrid { display: flex; gap: 14px; margin-top: 4px; }
+  .cgrid + .cgrid { margin-top: 14px; }
+  .cset { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 13px; padding: 18px 20px; }
+  .cset h4 { font-size: 16px; color: #0f172a; margin-bottom: 4px; }
+  .cset h4 .req { font-size: 10px; font-weight: 800; color: #fff; background: #2563eb; border-radius: 6px;
+    padding: 2px 8px; margin-left: 8px; vertical-align: middle; letter-spacing: .5px; }
+  .cset p { font-size: 13.5px; color: #475569; }
+  .cset p.why { color: #64748b; font-size: 13px; margin-top: 6px; border-top: 1px dashed #cbd5e1; padding-top: 6px; }
+  .cset p.why strong { color: #334155; }
+  .vals { display: flex; gap: 6px; margin: 8px 0 2px; flex-wrap: wrap; }
+  .vals span { font-size: 12px; background: #fff; border: 1px solid #cbd5e1; border-radius: 7px; padding: 3px 9px; color: #475569; }
+  .vals span b { color: #0f172a; }
+
+  .strip { display: flex; gap: 0; margin-top: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 13px; overflow: hidden; }
+  .strip .slabel { flex: 0 0 220px; background: #0b1226; color: #fff; padding: 16px 22px; font-size: 14px; font-weight: 800; letter-spacing: .5px;
+    display: flex; align-items: center; }
+  .strip .sbody { flex: 1; padding: 14px 22px; font-size: 13.5px; color: #475569; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .strip .sbody strong { color: #0f172a; }
+  .term { font-family: ui-monospace, monospace; font-size: 12.5px; background: #0b1226; color: #fbbf24; border-radius: 7px; padding: 4px 10px; }
+
+  .tip { margin-top: 20px; background: #eff6ff; border-left: 5px solid #2563eb; border-radius: 0 12px 12px 0;
+    padding: 15px 24px; font-size: 15.5px; color: #1e40af; }
+  .tip strong { color: #1e3a8a; }
+
+  .mock { background: #eef2f7; border: 1px solid #e2e8f0; border-radius: 14px; margin-top: 22px; overflow: hidden; }
+  .mock-bar { display: flex; align-items: center; gap: 8px; background: #dde5ef; padding: 11px 20px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.r { background: #f87171; } .dot.y { background: #fbbf24; } .dot.g { background: #34d399; }
+  .mock-bar .addr { margin-left: 12px; flex: 1; background: #fff; border-radius: 8px; font-size: 13.5px;
+    color: #64748b; padding: 6px 14px; font-family: ui-monospace, monospace; }
+  .mock-body { padding: 26px 32px; position: relative; }
+  .mock-label { font-size: 12px; font-weight: 700; letter-spacing: 2.5px; color: #94a3b8; margin-bottom: 12px; text-transform: uppercase; }
+  .cols2 { display: flex; gap: 26px; }
+  .cols2 > div { flex: 1; }
+  .pill { display: inline-block; font-size: 12.5px; font-weight: 700; border-radius: 999px; padding: 3px 12px; margin-left: 10px; }
+  .pill.keep { background: #dcfce7; color: #15803d; }
+  .pill.rej { background: #fee2e2; color: #b91c1c; }
+  .tree { font-size: 16.5px; line-height: 2.4; color: #334155; }
+  .tree .t1 { font-weight: 700; color: #0f172a; }
+  .cite { display: inline-block; font-family: ui-monospace, monospace; font-size: 12px; background: #fef3c7;
+    color: #92400e; border-radius: 6px; padding: 2px 8px; margin: 0 3px; }
+  .field label { display: block; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 6px; }
+  .field .input { background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #1e293b; }
+  .meter { background: #dbe3ee; border-radius: 999px; height: 13px; overflow: hidden; margin: 10px 0; }
+  .meter > div { background: #2563eb; height: 100%; border-radius: 999px; }
+  .figcards { display: flex; gap: 16px; }
+  .figcard { flex: 1; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; text-align: center; }
+  .figcard .thumb { height: 88px; border-radius: 8px; background: #dbeafe; margin-bottom: 10px; position: relative; overflow: hidden; }
+  .figcard .thumb::after { content: ""; position: absolute; left: 14%; right: 14%; bottom: 14px; height: 52px; background: #2563eb; opacity: .5;
+    clip-path: polygon(0 100%, 0 55%, 25% 55%, 25% 100%, 32% 100%, 32% 30%, 57% 30%, 57% 100%, 64% 100%, 64% 65%, 89% 65%, 89% 100%, 100% 100%, 100% 40%, 100% 100%); }
+  .figcard .cap { font-size: 13px; color: #64748b; margin-bottom: 10px; }
+  .mini-btn { font-size: 12.5px; font-weight: 700; border-radius: 7px; padding: 6px 13px; margin: 0 3px;
+    border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; }
+  .mini-btn.add { background: #2563eb; color: #fff; border-color: #2563eb; }
+  .clickbadge { position: absolute; top: -16px; right: 26px; background: #f43f5e; color: #fff;
+    font-size: 12px; font-weight: 800; letter-spacing: 1.5px; border-radius: 999px;
+    padding: 7px 17px; box-shadow: 0 3px 10px rgba(244,63,94,.45); text-transform: uppercase; }
+  .checkrow { display: flex; gap: 20px; font-size: 15px; color: #334155; margin: 12px 0; align-items: center; }
+  .checkrow label { display: flex; align-items: center; gap: 9px; }
+  .checkbox { width: 19px; height: 19px; border-radius: 5px; border: 1.5px solid #94a3b8; display: inline-block; }
+  .checkbox.on { background: #2563eb; border-color: #2563eb; }
+  .atlasdots { position: relative; height: 200px; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+  .atlasdots i { position: absolute; width: 11px; height: 11px; border-radius: 50%; }
+  .benefits { display: flex; gap: 18px; margin-top: 22px; }
+  .benefit { flex: 1; display: flex; gap: 14px; align-items: flex-start; background: #f8fafc;
+    border: 1px solid #e2e8f0; border-radius: 14px; padding: 20px 22px; }
+  .benefit .bicon { flex: 0 0 44px; height: 44px; border-radius: 13px; background: #dbeafe; color: #1d4ed8;
+    font-size: 21px; display: flex; align-items: center; justify-content: center; }
+  .benefit h4 { font-size: 16.5px; color: #0f172a; margin-bottom: 3px; }
+  .benefit p { font-size: 14.5px; color: #64748b; }
+  .faq { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 22px 26px; margin-bottom: 16px; }
+  .faq h4 { font-size: 17px; color: #0f172a; margin-bottom: 5px; }
+  .faq p { font-size: 15px; color: #64748b; }
+  .foot { position: absolute; bottom: 32px; left: 72px; right: 72px; display: flex; justify-content: space-between;
+    font-size: 13px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 18px; }
+  .foot a { color: #2563eb; text-decoration: none; }
+  .bignum { font-size: 15px; font-weight: 800; color: #2563eb; letter-spacing: 1px; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<!-- 1 COVER -->
+<div class="screen cover">
+  <span class="kicker">SuperResearcher &middot; Guided Tour</span>
+  <h1>SuperResearcher,<br><span class="accent">a real deep-research harness,</span><br><span style="font-size:44px; letter-spacing:-1px; color:#94a3b8;">unlike essay-writing models.</span></h1>
+  <p class="sub">A screen-by-screen tour: every setting explained, every stage in the order you'll meet it, and why each piece exists.</p>
+  <div class="meta"><span>~12 min read</span><span>Beginner friendly</span><span>v0.2</span></div>
+</div>
+
+<!-- 2 OVERVIEW -->
+<div class="screen">
+  <div class="kicker2">THE APP, IN ORDER</div>
+  <h2 class="st">Six stages, start to finish</h2>
+  <p class="ssub"><strong>SuperResearcher</strong> runs on your own computer. You describe a topic, and it does the legwork: finding real sources, reading them, organizing what they say, and writing it up as a polished report with charts pulled from the sources themselves. One page of this guide per stage, in the order you'll click them:</p>
+  <div class="stepper">
+    <div class="stage"><div class="n">1</div><h3>Scope</h3><p>Describe the research and set the dials. The run executes here.</p></div>
+    <div class="stage"><div class="n">2</div><h3>Map</h3><p>Explore the embedding Atlas of everything it read.</p></div>
+    <div class="stage"><div class="n">3</div><h3>Curate</h3><p>Shape the topic tree: keep what matters, cut the rest.</p></div>
+    <div class="stage"><div class="n">4</div><h3>Compose</h3><p>Assemble the evidence each section will cite.</p></div>
+    <div class="stage"><div class="n">5</div><h3>Compile</h3><p>Draft the outline, then write the paper section by section.</p></div>
+    <div class="stage"><div class="n">6</div><h3>Publish</h3><p>Review figures, pick a template, export PDF &amp; HTML.</p></div>
+  </div>
+  <div class="tip"><strong>How to read this guide:</strong> each of the next six pages covers one stage &mdash; what the screen shows, what each control means and why it exists, and the one action that moves you forward.</div>
+</div>
+
+<!-- 3 STAGE 1: SCOPE -->
+<div class="screen">
+  <div class="kicker2">STAGE 1 <span class="tabtag">Scope tab</span></div>
+  <h2 class="st">Scope: the research brief</h2>
+  <p class="ssub">Every control on the form, what it means, and why it's there. The topic is the only required field &mdash; the rest tune how the run behaves.</p>
+  <div class="cgrid">
+    <div class="cset"><h4>Research topic <span class="req">Required</span></h4>
+      <p>The subject in plain language. Drives queries, source selection, topics, chapters.</p>
+      <p class="why"><strong>Why:</strong> the app's only definition of "relevant." Specific beats clever.</p></div>
+    <div class="cset"><h4>Depth</h4>
+      <p>Search results considered <strong>per query</strong>.</p>
+      <div class="vals"><span><b>Low</b> 3</span><span><b>Med</b> 7</span><span><b>High</b> 10</span><span><b>X-High</b> 15</span><span><b>Ludicrous</b> 50</span></div>
+      <p class="why"><strong>Why:</strong> the thoroughness dial. Richer corpus, longer run.</p></div>
+    <div class="cset"><h4>Breadth</h4>
+      <p><strong>Angles of attack</strong> generated per topic when expanding queries.</p>
+      <div class="vals"><span><b>Low</b> 1</span><span><b>Med</b> 3</span><span><b>High</b> 5</span></div>
+      <p class="why"><strong>Why:</strong> depth digs one query; breadth covers angles you wouldn't think of.</p></div>
+  </div>
+  <div class="cgrid">
+    <div class="cset"><h4>Final sources</h4>
+      <p>Target corpus size. Discovery stops here (default <strong>120</strong>, max <strong>500</strong>).</p>
+      <p class="why"><strong>Why:</strong> caps the run &mdash; every source is downloaded, chunked, embedded.</p></div>
+    <div class="cset"><h4>Research context</h4>
+      <p>Why it matters, who it's for, what decision it supports.</p>
+      <p class="why"><strong>Why:</strong> an investor's report reads differently from a founder's. Context picks which.</p></div>
+    <div class="cset"><h4>Scope controls <span style="font-size:11px; color:#64748b; font-weight:400;">(advanced)</span></h4>
+      <p>Audience, geography, time horizon, objective, must include / exclude.</p>
+      <p class="why"><strong>Why:</strong> guardrails &mdash; "must exclude: consumer drones" keeps the report on rails.</p></div>
+  </div>
+  <div class="strip">
+    <div class="slabel">AFTER START &mdash; RUN PHASES</div>
+    <div class="sbody"><span><strong>Dossier</strong> &rarr; folder</span><span><strong>Protocol</strong> &rarr; plan</span><span><strong>Heuristics</strong> &rarr; queries</span><span><strong>Discover</strong> &rarr; candidates</span><span><strong>Select</strong> &rarr; final set</span><span><strong>Ingest</strong> &rarr; download &amp; extract</span></div>
+  </div>
+  <div class="strip">
+    <div class="slabel">API KEYS &middot; REQUIRED</div>
+    <div class="sbody"><span class="term">EXA_API_KEY=exa_...</span><span>search &mdash; no key, no discovery</span><span class="term">GEMINI_API_KEY=AIza...</span><span>writing &mdash; quality comes from this model</span><span style="color:#b91c1c;">in <strong>api_keys.txt</strong>, never committed</span></div>
+  </div>
+</div>
+
+<!-- 4 STAGE 2: MAP -->
+<div class="screen">
+  <div class="kicker2">STAGE 2 <span class="tabtag">Map tab</span></div>
+  <h2 class="st">Map: the embedding Atlas</h2>
+  <p class="ssub">Every passage becomes an <strong>embedding</strong> &mdash; a numeric fingerprint of what it <em>means</em> &mdash; plotted on a 2D map. Dots together say similar things. <strong>Why embeddings, not keywords:</strong> keywords find only words you thought of; embeddings find <em>meaning</em> &mdash; "battery energy density" lands beside "cell specific energy" with zero shared words. Topic discovery sees the real themes, and every citation is retrieved by meaning.</p>
+  <div class="mock" style="margin-top:0;">
+    <div class="mock-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="addr">http://127.0.0.1:8765 &mdash; Map &middot; 2,410 chunks from 31 sources</span></div>
+    <div class="mock-body">
+      <div class="cols2">
+        <div class="atlasdots">
+          <i style="left:10%;top:28%;background:#2563eb"></i><i style="left:14%;top:36%;background:#2563eb"></i><i style="left:12%;top:22%;background:#93c5fd"></i><i style="left:17%;top:30%;background:#2563eb"></i><i style="left:22%;top:42%;background:#93c5fd"></i>
+          <i style="left:36%;top:58%;background:#0ea5e9"></i><i style="left:40%;top:53%;background:#0ea5e9"></i><i style="left:34%;top:64%;background:#7dd3fc"></i><i style="left:43%;top:60%;background:#0ea5e9"></i><i style="left:38%;top:48%;background:#7dd3fc"></i>
+          <i style="left:62%;top:26%;background:#8b5cf6"></i><i style="left:66%;top:32%;background:#8b5cf6"></i><i style="left:60%;top:20%;background:#c4b5fd"></i><i style="left:69%;top:27%;background:#8b5cf6"></i><i style="left:64%;top:38%;background:#c4b5fd"></i>
+          <i style="left:78%;top:60%;background:#f59e0b"></i><i style="left:82%;top:56%;background:#fbbf24"></i><i style="left:76%;top:66%;background:#f59e0b"></i><i style="left:84%;top:66%;background:#fbbf24"></i>
+          <i style="left:24%;top:76%;background:#64748b"></i><i style="left:50%;top:78%;background:#64748b"></i><i style="left:68%;top:76%;background:#94a3b8"></i>
+          <i style="left:47%;top:38%;background:#2563eb;width:15px;height:15px;border:2px solid #fff;box-shadow:0 0 0 2px #2563eb"></i>
+        </div>
+        <div>
+          <div class="mock-label">Chunk inspector &mdash; click any dot</div>
+          <div class="field"><div class="input" style="font-size:14.5px; min-height:130px;">&ldquo;Archer's Midnight is targeting a 100-mile range on current cell technology, but reserve requirements cut usable range by nearly a third on typical urban missions&hellip;&rdquo;<br><br><span class="cite">S0007:C0142</span> <span style="color:#94a3b8;">World Air Mobility Outlook 2025, p. 63</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="benefits">
+    <div class="benefit"><div class="bicon">&#9673;</div><div><h4>Coverage at a glance</h4><p>Tight clusters mean deep coverage; empty regions mean angles the corpus barely touches &mdash; a cue to run discovery again.</p></div></div>
+    <div class="benefit"><div class="bicon">&#128269;</div><div><h4>Evidence on demand</h4><p>Click any dot to read the exact passage &mdash; source, page, chunk ID. Every claim in the report traces back here.</p></div></div>
+    <div class="benefit"><div class="bicon">&#129513;</div><div><h4>Themes become chapters</h4><p>Clusters turn into the topic tree on the next page &mdash; the map is where the report's structure comes from.</p></div></div>
+  </div>
+</div>
+
+<!-- 5 STAGE 3: CURATE -->
+<div class="screen">
+  <div class="kicker2">STAGE 3 <span class="tabtag">Curate tab</span></div>
+  <h2 class="st">Curate: shape the topic tree</h2>
+  <p class="ssub">The Atlas clusters become a <strong>topic tree</strong> &mdash; the chapters and subtopics your report could cover. This is your <strong>editorial pass</strong>: <span class="pill keep" style="margin-left:0;">Keep</span> what matters, <span class="pill rej" style="margin-left:0;">Reject</span> what doesn't. Nothing rejected here reaches the report. The tree is discovered from your corpus, not invented &mdash; every branch traces back to real clusters of passages.</p>
+  <div class="mock" style="margin-top:0;">
+    <div class="mock-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="addr">http://127.0.0.1:8765 &mdash; Curate &middot; 10 chapters, 55 subtopics</span></div>
+    <div class="mock-body" style="position:relative;">
+      <span class="clickbadge">Your call</span>
+      <div class="cols2">
+        <div class="tree">
+          <div><span class="t1">1. eVTOL aircraft designs</span><span class="pill keep">Keep</span></div>
+          <div>&nbsp;&nbsp;&middot; Vectored thrust<span class="pill keep">Keep</span></div>
+          <div>&nbsp;&nbsp;&middot; Multirotor configurations<span class="pill keep">Keep</span></div>
+          <div>&nbsp;&nbsp;&middot; Wingless concepts<span class="pill rej">Reject</span></div>
+        </div>
+        <div class="tree">
+          <div><span class="t1">2. Certification pathways</span><span class="pill keep">Keep</span></div>
+          <div>&nbsp;&nbsp;&middot; FAA type certification<span class="pill keep">Keep</span></div>
+          <div>&nbsp;&nbsp;&middot; EASA SC-VTOL<span class="pill keep">Keep</span></div>
+          <div>&nbsp;&nbsp;&middot; Military airworthiness<span class="pill rej">Reject</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="benefits">
+    <div class="benefit"><div class="bicon">&#9986;</div><div><h4>Be ruthless</h4><p>Ten minutes here shapes the entire report. A tight tree beats a sprawling one.</p></div></div>
+    <div class="benefit"><div class="bicon">&#128465;</div><div><h4>Rejected stays rejected</h4><p>Cut branches never come back &mdash; the report can't drift into territory you ruled out.</p></div></div>
+    <div class="benefit"><div class="bicon">&#8635;</div><div><h4>Cut too deep?</h4><p>Re-run topic discovery any time. Curation is reversible until you compile.</p></div></div>
+  </div>
+</div>
+
+<!-- 6 STAGE 4: COMPOSE -->
+<div class="screen">
+  <div class="kicker2">STAGE 4 <span class="tabtag">Compose tab</span></div>
+  <h2 class="st">Compose: brief the writer</h2>
+  <p class="ssub">For each section, you prepare <strong>query terms</strong> &mdash; the phrases the app uses to pull the right evidence from the Atlas at writing time. <strong>Why this stage exists:</strong> writing straight from 3,000 chunks would drown the model in irrelevant passages. Compose narrows each section to a focused <strong>evidence bundle</strong> &mdash; a few dozen top chunks &mdash; so every section is written from the best material available, and every claim carries a real citation. Finalize the terms here; Compile builds on exactly this.</p>
+  <div class="mock" style="margin-top:0;">
+    <div class="mock-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="addr">http://127.0.0.1:8765 &mdash; Compose &middot; query-term preparation</span></div>
+    <div class="mock-body">
+      <div class="cols2">
+        <div>
+          <div class="mock-label">Section 4: Vertiport infrastructure &mdash; compose terms</div>
+          <div class="field"><div class="input" style="font-size:14.5px; min-height:110px;">vertiport siting requirements &middot; megawatt charging infrastructure &middot; urban air traffic management &middot; ground footprint per pad &middot; downtown skyport proposals</div></div>
+        </div>
+        <div>
+          <div class="mock-label">Evidence bundle</div>
+          <div class="field"><div class="input" style="font-size:14.5px; min-height:110px;"><strong>52 chunks</strong> from 11 sources<br>top match <span class="cite">S0014:C0087</span><br><span style="color:#94a3b8;">coverage: strong &middot; recency: strong</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="benefits">
+    <div class="benefit"><div class="bicon">&#127919;</div><div><h4>Precision over volume</h4><p>46 hand-checked chunks beat 3,000 unfiltered ones. The bundle is what the writer actually sees.</p></div></div>
+    <div class="benefit"><div class="bicon">&#128270;</div><div><h4>Thin bundle?</h4><p>A weak bundle means weak terms &mdash; refine them here. Far cheaper than rewriting the section later.</p></div></div>
+    <div class="benefit"><div class="bicon">&#128274;</div><div><h4>Lock before compiling</h4><p>Finalize every section's terms first. Compile reads these bundles and nothing else.</p></div></div>
+  </div>
+</div>
+
+<!-- 7 STAGE 5: COMPILE -->
+<div class="screen">
+  <div class="kicker2">STAGE 5 <span class="tabtag">Compile tab</span></div>
+  <h2 class="st">Compile: write the paper</h2>
+  <p class="ssub">Two moves. First <strong>Plan TOC</strong> &mdash; the app drafts a chapter-by-chapter outline from your curated topics. Read it like an editor; tick <em>Rebuild TOC</em> and run it again until the shape is right. Then <strong>Compile paper</strong> writes every section one by one, each from its evidence bundle, each factual claim carrying an inline citation. The outline is a draft, not a commitment &mdash; rebuild as many times as you like before a word is written.</p>
+  <div class="mock" style="margin-top:0;">
+    <div class="mock-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="addr">http://127.0.0.1:8765 &mdash; Compile &middot; section 23 of 55</span></div>
+    <div class="mock-body" style="position:relative;">
+      <span class="clickbadge">Compile paper</span>
+      <div class="cols2">
+        <div>
+          <div class="mock-label">Table of contents &middot; draft</div>
+          <div class="tree" style="line-height:2.1; font-size:15px;">
+            <div><span class="t1">1.</span> The eVTOL landscape: players and promises</div>
+            <div><span class="t1">2.</span> Aircraft designs and trade-offs</div>
+            <div><span class="t1">3.</span> Batteries: the binding constraint</div>
+            <div><span class="t1">4.</span> Vertiports: the ground game</div>
+            <div style="color:#94a3b8;">&hellip; 51 more sections</div>
+          </div>
+        </div>
+        <div>
+          <div class="mock-label">Latest section</div>
+          <div class="meter"><div style="width:45%"></div></div>
+          <div class="field" style="margin-top:10px;"><div class="input" style="font-size:14px;">Pack prices fell below $120/kWh for the third straight year <span class="cite">S0004:C0117</span>, yet usable energy density gains have slowed to roughly 4% annually <span class="cite">S0007:C0142</span>&hellip;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tip"><strong>Reading a citation:</strong> <span class="cite">S0001:C0107</span> means source 1, chunk 107. Open the Map tab's chunk inspector to read the exact passage behind any sentence in the report.</div>
+</div>
+
+<!-- 8 STAGE 6: PUBLISH -->
+<div class="screen">
+  <div class="kicker2">STAGE 6 <span class="tabtag">Publish tab</span></div>
+  <h2 class="st">Publish: figures, then export</h2>
+  <p class="ssub">Two jobs. <strong>Visual review</strong> first: the app pulls charts and figures straight out of your source PDFs and matches each to the section it belongs in &mdash; <strong>Add</strong> the good ones, <strong>Reject</strong> the duds. These are the real charts from the real sources, each captioned with where it came from. Then <strong>export</strong>: pick a template, tick your formats, hit Publish.</p>
+  <div class="mock" style="margin-top:0;">
+    <div class="mock-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="addr">http://127.0.0.1:8765 &mdash; Publish &middot; 11 figures matched</span></div>
+    <div class="mock-body" style="position:relative;">
+      <span class="clickbadge">Publish</span>
+      <div class="figcards">
+        <div class="figcard"><div class="thumb"></div><div class="cap">Cost per seat-mile vs helicopter &middot; S0007</div><span class="mini-btn add">Add</span><span class="mini-btn">Maybe</span><span class="mini-btn">Reject</span></div>
+        <div class="figcard"><div class="thumb"></div><div class="cap">Certification timelines: FAA vs EASA &middot; S0012</div><span class="mini-btn add">Add</span><span class="mini-btn">Maybe</span><span class="mini-btn">Reject</span></div>
+        <div class="figcard"><div class="thumb"></div><div class="cap">Battery density trend, 2015&ndash;2025 &middot; S0004</div><span class="mini-btn add">Add</span><span class="mini-btn">Maybe</span><span class="mini-btn">Reject</span></div>
+        <div class="figcard"><div class="thumb"></div><div class="cap">Vertiport throughput model &middot; S0014</div><span class="mini-btn add">Add</span><span class="mini-btn">Maybe</span><span class="mini-btn">Reject</span></div>
+      </div>
+      <div class="checkrow" style="margin-top:16px;">
+        <span class="bignum" style="margin:0;">TEMPLATE</span>
+        <span class="field" style="margin:0;"><div class="input" style="font-size:14.5px;">McKinsey &#9662;</div></span>
+        <span class="bignum" style="margin:0 0 0 24px;">FORMATS</span>
+        <label><span class="checkbox on"></span> PDF</label><label><span class="checkbox on"></span> HTML</label><label><span class="checkbox"></span> DOCX</label>
+      </div>
+    </div>
+  </div>
+  <div class="tip"><strong>Done:</strong> finished files land in the run folder under <span style="font-family:ui-monospace,monospace;">atlas/publish/</span> &mdash; open the PDF first, then the HTML to copy text or links. Two templates: <strong>McKinsey</strong> and <strong>Meta Research</strong>.</div>
+</div>
+
+<!-- 9 FAQ -->
+<div class="screen">
+  <div class="kicker2">BEFORE YOU GO</div>
+  <h2 class="st">Questions, answered</h2>
+  <p class="ssub">The things first-time users usually ask.</p>
+  <div class="cols2">
+    <div>
+      <div class="faq"><h4>How long does a full report take?</h4><p>Under an hour for a focused brief; several hours for a 50-section deep dive over 100+ sources. Live progress throughout &mdash; close the browser and come back anytime.</p></div>
+      <div class="faq"><h4>Which API keys do I need?</h4><p>A search key (Exa or Serper) and a language-model key (Gemini, or the Codex CLI) &mdash; in <b>api_keys.txt</b> before your first real run.</p></div>
+      <div class="faq"><h4>Can I see a finished report first?</h4><p>Yes &mdash; the repo's <b>outputs/</b> folder has complete reports, including the eVTOL air-mobility deep dive (55 sections, 11 source figures).</p></div>
+    </div>
+    <div>
+      <div class="faq"><h4>Where do my reports live?</h4><p><b>research_runs/&lt;date-topic&gt;_Corpus/</b> &mdash; originals, sidecars, the Atlas, finished PDFs. Nothing locked inside the app.</p></div>
+      <div class="faq"><h4>What if something breaks halfway?</h4><p>Each stage resumes where it stopped &mdash; completed work is never redone. Final verdicts are honest: Pass, Pass with warnings, or Fail.</p></div>
+      <div class="faq"><h4>Do I need to babysit it?</h4><p>No. Set the brief, hit Start, walk away. The two moments that want you are Curate (your editorial pass) and Publish (figure review).</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>SuperResearcher &middot; Guided Tour &middot; v0.2</span><span><a href="https://github.com/kumar-vis/super-researcher">kumar-vis/super-researcher</a> &middot; MIT</span></div>
+</div>
+
+</body>
+</html>
