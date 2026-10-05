@@ -1,33 +1,36 @@
-# Outputs
-
-Published SuperResearcher reports (PDF). Each report ships in McKinsey and
-Meta Research templates where available.
-
-## Global Migration 1826–2226: A 200-Year Forecast
-
-`global-migration-1826-2226/`
-
-Evidence-anchored long-range briefing on two centuries of human movement:
-historical waves since 1826, demographic / economic / climate / conflict
-drivers, forced displacement, climate-migration modeling (incl. Groundswell),
-labor mobility, asylum systems, border and control regimes, the migration hump,
-and a scenario framework (managed mobility / fortress fragmentation / compound
-crisis) for migration through 2226 — framed as scenarios, not predictions.
-
-- 51 sections · 395 inline source citations · 32 source-extracted figures
-- Corpus: 27 figure-dense sources (IOM, UN DESA, World Bank, UNHCR, IPCC, OECD, MPI, ILO, UNICEF, CGD, IDMC, ICMPD, UNDP, McKinsey)
-- Built October 2026 with the SuperResearcher native pipeline (ingest → figure
-  extraction → Atlas → topic discovery → compose → publish → visual funnel)
-
-## eVTOL UAM Flying Car — Feasibility, Opportunity, Technology, Scaling and Risks
-
-`evtol-uam-flying-car/`
-
-Deep-dive on electric vertical take-off and landing aircraft for urban air
-mobility: technology readiness, market opportunity, scaling path, and risks.
-
-- 54 pages · 55 sections · 367 inline source citations · 11 source-extracted figures
-- Built May–June 2026 (SuperResearcher v0.2 reference run)
-
-> Note: the Meta Research edition of the eVTOL report will be added here when
-> available; only the McKinsey edition is published at the moment.
+IyBPdXRwdXRzCgpQdWJsaXNoZWQgU3VwZXJSZXNlYXJjaGVyIHJlcG9ydHMg
+KFBERikuIEVhY2ggcmVwb3J0IHNoaXBzIGluIE1jS2luc2V5IGFuZApNZXRh
+IFJlc2VhcmNoIHRlbXBsYXRlcyB3aGVyZSBhdmFpbGFibGUuCgojIyBHbG9i
+YWwgTWlncmF0aW9uIDE4MjbigJMyMjI2OiBBIDIwMC1ZZWFyIEZvcmVjYXN0
+CgpgZ2xvYmFsLW1pZ3JhdGlvbi0xODI2LTIyMjYvYAoKRXZpZGVuY2UtYW5j
+aG9yZWQgbG9uZy1yYW5nZSBicmllZmluZyBvbiB0d28gY2VudHVyaWVzIG9m
+IGh1bWFuIG1vdmVtZW50OgpoaXN0b3JpY2FsIHdhdmVzIHNpbmNlIDE4MjYs
+IGRlbW9ncmFwaGljIC8gZWNvbm9taWMgLyBjbGltYXRlIC8gY29uZmxpY3QK
+ZHJpdmVycywgZm9yY2VkIGRpc3BsYWNlbWVudCwgY2xpbWF0ZS1taWdyYXRp
+b24gbW9kZWxpbmcgKGluY2wuIEdyb3VuZHN3ZWxsKSwKbGFib3IgbW9iaWxp
+dHksIGFzeWx1bSBzeXN0ZW1zLCBib3JkZXIgYW5kIGNvbnRyb2wgcmVnaW1l
+cywgdGhlIG1pZ3JhdGlvbiBodW1wLAphbmQgYSBzY2VuYXJpbyBmcmFtZXdv
+cmsgKG1hbmFnZWQgbW9iaWxpdHkgLyBmb3J0cmVzcyBmcmFnbWVudGF0aW9u
+IC8gY29tcG91bmQKY3Jpc2lzKSBmb3IgbWlncmF0aW9uIHRocm91Z2ggMjIy
+NiDigJQgZnJhbWVkIGFzIHNjZW5hcmlvcywgbm90IHByZWRpY3Rpb25zLgoK
+LSA1MSBzZWN0aW9ucyDCtyAzOTUgaW5saW5lIHNvdXJjZSBjaXRhdGlvbnMg
+wrcgMzIgc291cmNlLWV4dHJhY3RlZCBmaWd1cmVzCi0gQ29ycHVzOiAyNyBm
+aWd1cmUtZGVuc2Ugc291cmNlcyAoSU9NLCBVTiBERVNBLCBXb3JsZCBCYW5r
+LCBVTkhDUiwgSVBDQywgT0VDRCwgTVBJLCBJTE8sIFVOSUNFRiwgQ0dELCBJ
+RE1DLCBJQ01QRCwgVU5EUCwgTWNLaW5zZXkpCi0gQnVpbHQgT2N0b2JlciAy
+MDI2IHdpdGggdGhlIFN1cGVyUmVzZWFyY2hlciBuYXRpdmUgcGlwZWxpbmUg
+KGluZ2VzdCDihpIgZmlndXJlCiAgZXh0cmFjdGlvbiDihpIgQXRsYXMg4oaS
+IHRvcGljIGRpc2NvdmVyeSDihpIgY29tcG9zZSDihpIgcHVibGlzaCDihpIg
+dmlzdWFsIGZ1bm5lbCkKCiMjIGVWVE9MIFVBTSBGbHlpbmcgQ2FyIOKAlCBG
+ZWFzaWJpbGl0eSwgT3Bwb3J0dW5pdHksIFRlY2hub2xvZ3ksIFNjYWxpbmcg
+YW5kIFJpc2tzCgpgZXZ0b2wtdWFtLWZseWluZy1jYXIvYAoKRGVlcC1kaXZl
+IG9uIGVsZWN0cmljIHZlcnRpY2FsIHRha2Utb2ZmIGFuZCBsYW5kaW5nIGFp
+cmNyYWZ0IGZvciB1cmJhbiBhaXIKbW9iaWxpdHk6IHRlY2hub2xvZ3kgcmVh
+ZGluZXNzLCBtYXJrZXQgb3Bwb3J0dW5pdHksIHNjYWxpbmcgcGF0aCwgYW5k
+IHJpc2tzLgoKLSA1NCBwYWdlcyDCtyA1NSBzZWN0aW9ucyDCtyAzNjcgaW5s
+aW5lIHNvdXJjZSBjaXRhdGlvbnMgwrcgMTEgc291cmNlLWV4dHJhY3RlZCBm
+aWd1cmVzCi0gQnVpbHQgTWF54oCTSnVuZSAyMDI2IChTdXBlclJlc2VhcmNo
+ZXIgdjAuMiByZWZlcmVuY2UgcnVuKQoKPiBOb3RlOiB0aGUgTWV0YSBSZXNl
+YXJjaCBlZGl0aW9uIG9mIHRoZSBlVlRPTCByZXBvcnQgd2lsbCBiZSBhZGRl
+ZCBoZXJlIHdoZW4KPiBhdmFpbGFibGU7IG9ubHkgdGhlIE1jS2luc2V5IGVk
+aXRpb24gaXMgcHVibGlzaGVkIGF0IHRoZSBtb21lbnQuCg==
