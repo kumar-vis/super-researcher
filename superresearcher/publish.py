@@ -15,6 +15,7 @@ from urllib.parse import quote
 from . import atlas, query_bundles
 from .config import atomic_write_json, atomic_write_text, load_api_keys, slugify
 from .llm import LLMClient
+from .prompts import DENSITY_GUIDANCE
 
 
 PUBLISH_VERSION = "publish-markdown-v1"
@@ -391,6 +392,7 @@ def toc_prompt(corpus: Path, sections: list[dict[str, Any]]) -> str:
     return f"""You are arranging a research paper table of contents.
 
 Use only the provided finalized sections. Do not invent sections. Arrange them into a cohesive paper flow.
+Be elaborate and comprehensive in coverage. Keep sections mutually exclusive and collectively exhaustive: no overlaps between sections, no gaps in the topic.
 
 Corpus: {corpus.name}
 Finalized sections:
@@ -557,6 +559,7 @@ Rules:
 - Do not repeat prior sections; use the continuity summary only for flow.
 - Write polished Markdown for this section only.
 - Follow the user's section customization request if present.
+- {DENSITY_GUIDANCE}
 
 Paper/corpus: {corpus.name}
 Full table of contents:
@@ -598,6 +601,7 @@ def update_continuity_summary(llm: LLMClient, previous_summary: str, plan_sectio
     prompt = f"""Compact the running paper summary for continuity.
 
 Keep the summary under 900 words. Preserve flow, key findings, unresolved tensions, and facts that later sections should not repeat.
+{DENSITY_GUIDANCE}
 
 Previous summary:
 {previous_summary or '(none)'}

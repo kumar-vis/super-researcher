@@ -318,3 +318,13 @@ Return JSON with these required top-level keys:
   ]
 }}
 """
+
+
+# Shared style guidance injected into every compilation-stage prompt (TOC
+# planning, section writing, continuity summaries) so information density
+# survives the full multi-section loop.
+DENSITY_GUIDANCE = (
+    "Write with high information density and low fluff: every sentence should "
+    "carry a fact, figure, or cited claim. Cut throat-clearing, repetition, "
+    "and decorative prose."
+)
