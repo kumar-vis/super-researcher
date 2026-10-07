@@ -34,3 +34,18 @@ ZXIgdjAuMiByZWZlcmVuY2UgcnVuKQoKPiBOb3RlOiB0aGUgTWV0YSBSZXNl
 YXJjaCBlZGl0aW9uIG9mIHRoZSBlVlRPTCByZXBvcnQgd2lsbCBiZSBhZGRl
 ZCBoZXJlIHdoZW4KPiBhdmFpbGFibGU7IG9ubHkgdGhlIE1jS2luc2V5IGVk
 aXRpb24gaXMgcHVibGlzaGVkIGF0IHRoZSBtb21lbnQuCg==
+
+## The 100-Year Life: How Longer Lives Reshape Work, Money, Health, and Society
+
+`100-year-life/`
+
+Evidence-anchored briefing on how longer lives reshape work, money, health, and
+society through 2050 and beyond — with Japan, South Korea, Europe and US deep dives.
+
+- 96 sections + methods appendix · 1,000+ inline source citations · 32 source-extracted figures
+- Corpus: 30 figure-dense sources (16 publishers), 9,311 text chunks, 1,545 native figures
+- Built October 2026 with the SuperResearcher native pipeline (ingest → figure
+  extraction → Atlas → topic discovery → compose → publish → visual funnel)
+
+> Note: only the Meta Research edition of the 100-year-life report is published
+> at the moment.
