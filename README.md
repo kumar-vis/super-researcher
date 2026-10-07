@@ -10,7 +10,7 @@
 
 Real reports produced by the harness — see [`outputs/`](outputs/). They replicate consulting-grade reports: structured chapters, evidence-backed claims, and charts pulled from the actual sources.
 
-- **[Global Migration 1826–2226: A 200-Year Forecast](outputs/global-migration-1826-2226/)** — 51 sections, 395 inline source citations, 32 figures extracted from the source PDFs (McKinsey and Meta Research editions)
+- **[Global Migration 1826–2226: A 200-Year Forecast](outputs/global-migration-1826-2226/)** — 51 sections, 395 inline source citations, 32 figures extracted from the source PDFs (Vantage and Beacon Research editions)
 - **[eVTOL UAM Flying Car: Feasibility, Opportunity, Technology, Scaling and Risks](outputs/evtol-uam-flying-car/)** — 54 pages, 55 sections, 367 inline citations, 11 source-extracted figures
 
 What you get: a consulting-style PDF where every claim carries a source citation, and every chart comes from the actual sources.

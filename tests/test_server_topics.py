@@ -254,21 +254,21 @@ class TopicApiTests(unittest.TestCase):
                 result = request_json(
                     f"{base}/api/publish/report/preview",
                     "POST",
-                    {"corpus_id": "demo_Corpus", "template_id": "mckinsey", "metadata": metadata},
+                    {"corpus_id": "demo_Corpus", "template_id": "vantage", "metadata": metadata},
                 )
 
-        mocked.assert_called_once_with("demo_Corpus", template_id="mckinsey", metadata=metadata)
+        mocked.assert_called_once_with("demo_Corpus", template_id="vantage", metadata=metadata)
         self.assertEqual(result, payload)
 
     def test_report_export_route(self) -> None:
         payload = {"outputs": [{"format": "pdf", "path": "/tmp/report.pdf"}]}
         metadata = {"title": "Demo"}
-        request = {"corpus_id": "demo_Corpus", "template_id": "mckinsey", "output_dir": "/tmp/report", "formats": ["pdf"], "metadata": metadata}
+        request = {"corpus_id": "demo_Corpus", "template_id": "vantage", "output_dir": "/tmp/report", "formats": ["pdf"], "metadata": metadata}
         with patch.object(server.reporting, "export_report", return_value=payload) as mocked:
             with topic_server() as base:
                 result = request_json(f"{base}/api/publish/report/export", "POST", request)
 
-        mocked.assert_called_once_with("demo_Corpus", template_id="mckinsey", output_dir="/tmp/report", formats=["pdf"], metadata=metadata)
+        mocked.assert_called_once_with("demo_Corpus", template_id="vantage", output_dir="/tmp/report", formats=["pdf"], metadata=metadata)
         self.assertEqual(result, payload)
 
 

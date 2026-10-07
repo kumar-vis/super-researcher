@@ -31,7 +31,7 @@ Output: `parallel-search-batches.json`.
 
 3. **Run Candidate Acquisition**
 
-Execute the search plan and build a large candidate pool, capture 10 results per search term, prioritizing high-quality sources over shallow SEO content. Strong source types include pdf links, peer-reviewed papers, arXiv/preprints, university reports, consulting company reports (McKinsey, BCG, Deloitte etc), government reports, regulatory documents, standards, patents, technical PDFs, whitepapers, corporate technical pages, investor decks, annual reports, SEC filings, market research reports, industry association reports, datasets, conference proceedings, books/chapters, credible trade publications, primary interviews/transcripts, and reputable long-form analysis.
+Execute the search plan and build a large candidate pool, capture 10 results per search term, prioritizing high-quality sources over shallow SEO content. Strong source types include pdf links, peer-reviewed papers, arXiv/preprints, university reports, consulting company reports (leading strategy consultancies etc), government reports, regulatory documents, standards, patents, technical PDFs, whitepapers, corporate technical pages, investor decks, annual reports, SEC filings, market research reports, industry association reports, datasets, conference proceedings, books/chapters, credible trade publications, primary interviews/transcripts, and reputable long-form analysis.
 
 Avoid or heavily downgrade tabloids, low-quality blogs, generic SEO pages, content farms, unsourced summaries, and duplicate rewritten articles.
 

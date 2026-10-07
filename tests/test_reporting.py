@@ -140,10 +140,10 @@ class ReportingTests(unittest.TestCase):
     def test_template_registry_has_expected_v1_templates(self) -> None:
         self.assertEqual(
             set(reporting.REPORT_TEMPLATES),
-            {"mckinsey", "iclr", "neurips", "meta_research", "nature_review", "ieee_acm", "latex_original"},
+            {"vantage", "iclr", "neurips", "beacon_research", "nature_review", "ieee_acm", "latex_original"},
         )
-        self.assertEqual(reporting.REPORT_TEMPLATES["mckinsey"]["layout_id"], "consulting-report")
-        self.assertEqual(reporting.REPORT_TEMPLATES["meta_research"]["opening_block"], "meta-paper-abstract")
+        self.assertEqual(reporting.REPORT_TEMPLATES["vantage"]["layout_id"], "consulting-report")
+        self.assertEqual(reporting.REPORT_TEMPLATES["beacon_research"]["opening_block"], "beacon-paper-abstract")
         self.assertEqual(reporting.REPORT_TEMPLATES["latex_original"]["name"], "Latex - original")
 
     def test_metadata_defaults_and_invalid_assets_warn_without_failing(self) -> None:
@@ -256,14 +256,14 @@ class ReportingTests(unittest.TestCase):
         self.assertEqual(reporting.clean_reference_text("Market Outlook 2026 ."), "Market Outlook 2026.")
 
     def test_meta_template_has_font_fallbacks_and_gray_summary_box(self) -> None:
-        template = reporting.REPORT_TEMPLATES["meta_research"]
+        template = reporting.REPORT_TEMPLATES["beacon_research"]
 
         self.assertIn("Optimistic Display", template["heading_font_stack"])
         self.assertIn("Optimistic Text", template["body_font_stack"])
         self.assertIn("Challenger Inter", template["body_font_stack"])
-        self.assertEqual(template["summary_block"], "meta-paper-abstract")
+        self.assertEqual(template["summary_block"], "beacon-paper-abstract")
         self.assertEqual(template["cover_treatment"], "gray-paper-front-matter")
-        self.assertIn(".meta-paper-abstract", template["css"])
+        self.assertIn(".beacon-paper-abstract", template["css"])
         self.assertIn("#f1f3f5", template["css"])
         self.assertIn("text-align: justify", template["css"])
 
@@ -272,7 +272,7 @@ class ReportingTests(unittest.TestCase):
         self.assertIn("data:", assets["font_css"])
 
     def test_non_meta_templates_use_tighter_margins_and_smaller_type(self) -> None:
-        for template_id in ("mckinsey", "iclr", "neurips", "nature_review"):
+        for template_id in ("vantage", "iclr", "neurips", "nature_review"):
             template = reporting.REPORT_TEMPLATES[template_id]
             self.assertEqual(template["geometry"], "margin=0.35in")
             self.assertIn("@page { size: A4; margin: 0.35in 0.32in 0.38in; }", template["css"])
@@ -285,7 +285,7 @@ class ReportingTests(unittest.TestCase):
         self.assertIn(".template-ieee_acm .report-kicker { color: #111; text-transform: none;", reporting.RICH_REPORT_CSS)
         self.assertIn(".template-ieee_acm .report-chapter-title { column-span: all; font-size: 13.5px; text-transform: none; color: #111; }", reporting.RICH_REPORT_CSS)
 
-        self.assertEqual(reporting.REPORT_TEMPLATES["meta_research"]["geometry"], "margin=0.45in")
+        self.assertEqual(reporting.REPORT_TEMPLATES["beacon_research"]["geometry"], "margin=0.45in")
         self.assertEqual(reporting.REPORT_TEMPLATES["latex_original"]["geometry"], "margin=0.9in")
 
     def test_output_dir_must_be_absolute_or_home_relative(self) -> None:
@@ -340,7 +340,7 @@ p { text-justify: inter-word; font-weight: 760; box-shadow: 0 1px 3px #000; }
 
             result = reporting.build_report_preview(
                 str(corpus),
-                "meta_research",
+                "beacon_research",
                 metadata={"authors": "Research Team", "organization": "Challenger Deep", "website": "https://example.test"},
             )
 
@@ -352,9 +352,9 @@ p { text-justify: inter-word; font-weight: 760; box-shadow: 0 1px 3px #000; }
             if shutil.which("pdftoppm"):
                 self.assertTrue(result["preview_page_urls"])
             self.assertIn("Demo report", result["html"])
-            self.assertIn("template-meta_research", result["html"])
+            self.assertIn("template-beacon_research", result["html"])
             self.assertIn("report-opening", result["html"])
-            self.assertIn("meta-paper-abstract", result["html"])
+            self.assertIn("beacon-paper-abstract", result["html"])
             self.assertIn("challenger-wordmark", result["html"])
             self.assertIn("🤿", result["html"])
             self.assertIn("Challenger Deep", result["html"])
@@ -366,11 +366,11 @@ p { text-justify: inter-word; font-weight: 760; box-shadow: 0 1px 3px #000; }
             self.assertIn("Challenger Inter", result["html"])
             self.assertIn("padding-top: 26px", result["html"])
             self.assertIn("@page { size: A4; margin: 0.45in 0.38in 0.48in; }", result["html"])
-            self.assertIn(".template-meta_research .report-body p, .template-meta_research .report-body li, .template-meta_research .report-references li { font-size: 12.5px", result["html"])
+            self.assertIn(".template-beacon_research .report-body p, .template-beacon_research .report-body li, .template-beacon_research .report-references li { font-size: 12.5px", result["html"])
             self.assertIn("font-size: 21px", result["html"])
             self.assertIn("clamp(16px, 2.5vw, 24px)", result["html"])
             self.assertIn("font-size: 10px", result["html"])
-            self.assertIn(".template-meta_research .meta-paper-abstract p { font-size: 10px", result["html"])
+            self.assertIn(".template-beacon_research .beacon-paper-abstract p { font-size: 10px", result["html"])
             self.assertNotIn("[S0001:Cchunk-1]", result["html"])
             self.assertIn("https://one.test", result["html"])
             self.assertIn("<sup", result["html"])
@@ -385,17 +385,17 @@ p { text-justify: inter-word; font-weight: 760; box-shadow: 0 1px 3px #000; }
             cover.write_bytes(png_bytes())
             structure = reporting.build_report_structure(corpus, image_mode="preview", metadata={"cover_image_path": str(cover)})
 
-            meta_html = reporting.render_rich_report_html(structure, reporting.REPORT_TEMPLATES["meta_research"])
-            mckinsey_html = reporting.render_rich_report_html(structure, reporting.REPORT_TEMPLATES["mckinsey"])
+            meta_html = reporting.render_rich_report_html(structure, reporting.REPORT_TEMPLATES["beacon_research"])
+            vantage_html = reporting.render_rich_report_html(structure, reporting.REPORT_TEMPLATES["vantage"])
             iclr_html = reporting.render_rich_report_html(structure, reporting.REPORT_TEMPLATES["iclr"])
             neurips_html = reporting.render_rich_report_html(structure, reporting.REPORT_TEMPLATES["neurips"])
 
-            self.assertIn("template-meta_research", meta_html)
+            self.assertIn("template-beacon_research", meta_html)
             self.assertIn("#f1f3f5", meta_html)
-            self.assertIn("meta-paper-abstract", meta_html)
-            self.assertIn("template-mckinsey", mckinsey_html)
-            self.assertIn("report-exhibit", mckinsey_html)
-            self.assertIn("--cover-image", mckinsey_html)
+            self.assertIn("beacon-paper-abstract", meta_html)
+            self.assertIn("template-vantage", vantage_html)
+            self.assertIn("report-exhibit", vantage_html)
+            self.assertIn("--cover-image", vantage_html)
             self.assertIn("template-iclr", iclr_html)
             self.assertIn("Abstract", iclr_html)
             self.assertIn("template-neurips", neurips_html)
@@ -409,7 +409,7 @@ p { text-justify: inter-word; font-weight: 760; box-shadow: 0 1px 3px #000; }
 
             manifest = reporting.export_report(
                 str(corpus),
-                "mckinsey",
+                "vantage",
                 str(output_dir),
                 ["pdf", "html", "docx", "latex"],
                 metadata={"authors": "Research Team"},

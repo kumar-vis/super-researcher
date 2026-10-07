@@ -60,7 +60,7 @@ const state = {
     preview: null,
     error: "",
     corpusId: null,
-    templateId: "mckinsey",
+    templateId: "vantage",
     outputDir: "",
     metadata: {},
     previewTimer: null,
@@ -1387,7 +1387,7 @@ function bindPublishReport() {
   $("refreshReportPreview").addEventListener("click", loadReportPreview);
   $("publishReportButton").addEventListener("click", exportPublishReport);
   $("reportTemplateSelect").addEventListener("change", () => {
-    state.publishReport.templateId = $("reportTemplateSelect").value || "mckinsey";
+    state.publishReport.templateId = $("reportTemplateSelect").value || "vantage";
     renderPublishReport();
     scheduleReportPreview();
   });
@@ -1432,7 +1432,7 @@ async function loadPublishReportForSelected() {
   try {
     const payload = await fetchJson(`/api/atlas/${encodeURIComponent(corpusId)}/publish/report`);
     state.publishReport.payload = payload;
-    state.publishReport.templateId = state.publishReport.templateId || payload.default_template_id || "mckinsey";
+    state.publishReport.templateId = state.publishReport.templateId || payload.default_template_id || "vantage";
     if (!state.publishReport.outputDir || previousCorpusId !== corpusId) {
       state.publishReport.outputDir = payload.default_output_dir || "";
     }
@@ -1455,7 +1455,7 @@ function renderPublishReport() {
   const payload = state.publishReport.payload;
   const ready = Boolean(payload?.ready);
   const templates = payload?.templates || [];
-  const templateId = state.publishReport.templateId || payload?.default_template_id || "mckinsey";
+  const templateId = state.publishReport.templateId || payload?.default_template_id || "vantage";
   const selectedTemplate = templates.find((template) => template.id === templateId) || templates[0] || {};
   $("reportTemplateSelect").innerHTML = templates.map((template) => `<option value="${escapeHtml(template.id)}">${escapeHtml(template.name)}</option>`).join("");
   if (templates.length) $("reportTemplateSelect").value = selectedTemplate.id || templateId;

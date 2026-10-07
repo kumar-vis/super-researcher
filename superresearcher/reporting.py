@@ -19,14 +19,14 @@ from .config import atomic_write_json, atomic_write_text, slugify
 
 
 REPORT_VERSION = "report-export-v1"
-DEFAULT_TEMPLATE_ID = "mckinsey"
+DEFAULT_TEMPLATE_ID = "vantage"
 PRODUCT_NAME = "Challenger Deep"
 ROOT = Path(__file__).resolve().parents[1]
 LATEX_ORIGINAL_TEMPLATE_ID = "latex_original"
 REPORTING_VENV = ROOT / ".reporting-venv"
 INTER_FONT_URL = "https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf"
 INTER_FONT_PATH = ROOT / "web" / "assets" / "fonts" / "Inter-Variable.ttf"
-META_FONT_CANDIDATES = ("Optimistic Display", "Optimistic Text", "Meta Sans")
+META_FONT_CANDIDATES = ("Optimistic Display", "Optimistic Text")
 _FONT_REGISTRY_CACHE: set[str] | None = None
 REPORT_FORMATS = {
     "pdf": {"id": "pdf", "label": "PDF", "extension": "pdf"},
@@ -85,63 +85,63 @@ body.rich-report-page { margin: 0; padding: 0; max-width: none; background: #f3f
 .report-references h2 { margin-top: 0; }
 .report-references ol { padding-left: 1.35rem; }
 .report-references li { margin: 0 0 10px; overflow-wrap: anywhere; }
-.template-meta_research { max-width: 1060px; margin: 0 auto; padding-top: 26px; box-sizing: border-box; font-family: "Optimistic Text", "Meta Sans", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; color: #1f2933; background: #fff; font-weight: 400; }
-.template-meta_research h1, .template-meta_research h2, .template-meta_research h3, .template-meta_research .report-logo-text, .template-meta_research .report-kicker, .template-meta_research .report-byline, .template-meta_research .report-metadata { font-family: "Optimistic Display", "Meta Sans", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; }
-.template-meta_research .report-cover { display: block; box-sizing: border-box; margin: 0 auto 26px; max-width: 1000px; padding: 28px 24px 26px; border: 0; border-radius: 14px; background: #f1f3f5; overflow: visible; }
-.template-meta_research .report-brand-row { justify-content: flex-start; min-height: 32px; margin-bottom: 28px; }
-.template-meta_research .report-logo { max-width: 128px; max-height: 38px; }
-.template-meta_research .report-logo-text { display: inline-flex; align-items: center; gap: 10px; color: #111827; font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: 0; }
-.template-meta_research .wordmark-emoji { font-size: 22px; line-height: 1; }
-.template-meta_research .report-kicker { display: none; }
-.template-meta_research .report-title-block h1 { max-width: 760px; margin: 0; font-size: clamp(16px, 2.5vw, 24px); line-height: 1.16; font-weight: 700; color: #050505; }
-.template-meta_research .report-subtitle { max-width: 760px; margin-top: 12px; color: #3f4852; font-family: "Optimistic Text", "Meta Sans", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; font-size: 18px; line-height: 1.32; font-weight: 400; }
-.template-meta_research .report-byline { margin-top: 18px; color: #111827; font-size: 16px; font-weight: 600; }
-.template-meta_research .report-metadata { display: grid; gap: 5px; margin-top: 26px; color: #111827; font-size: 14px; }
-.template-meta_research .report-metadata div { display: flex; gap: 7px; align-items: baseline; }
-.template-meta_research .report-metadata dt { color: #050505; font-weight: 800; }
-.template-meta_research .report-metadata dd { color: #27313b; }
-.template-meta_research .report-opening { max-width: none; margin-top: 22px; padding: 0; border: 0; border-radius: 0; background: transparent; color: #39434d; font-family: "Optimistic Text", "Meta Sans", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; font-size: 10px; line-height: 1.28; font-weight: 400; }
-.template-meta_research .report-opening h2 { display: none; }
-.template-meta_research .report-opening p { margin: 0 0 5px; font-size: 10px; line-height: 1.28; text-align: justify; text-justify: inter-word; hyphens: auto; }
-.template-meta_research .report-opening p:last-child { margin-bottom: 0; }
-.template-meta_research .report-toc { display: none; }
-.template-meta_research .report-body, .template-meta_research .report-references { max-width: 1000px; padding-left: 17px; padding-right: 17px; font-family: "Optimistic Text", "Meta Sans", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; font-size: 12.5px; line-height: 1.45; font-weight: 400; }
-.template-meta_research .report-body { padding-top: 0; }
-.template-meta_research .report-body p, .template-meta_research .report-body li, .template-meta_research .report-references li { font-size: 12.5px; line-height: 1.45; font-weight: 400; text-align: justify; text-justify: inter-word; hyphens: auto; }
-.template-meta_research .report-body strong, .template-meta_research .report-references strong { font-weight: 600; }
-.template-meta_research a { color: #0866ff; }
-.template-meta_research .report-chapter { margin-top: 26px; }
-.template-meta_research .report-chapter-title { margin-bottom: 12px; border: 0; padding-top: 0; color: #111827; font-family: "Optimistic Display", "Meta Sans", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; font-size: 21px; line-height: 1.14; font-weight: 700; }
-.template-meta_research .report-section { margin-top: 18px; }
-.template-meta_research .report-section-title { color: #111827; font-family: "Optimistic Display", "Meta Sans", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; font-size: 15.5px; line-height: 1.18; font-weight: 700; }
-.template-meta_research .report-section-body p { margin-bottom: 9px; }
-.template-meta_research .report-exhibit { margin: 26px auto; border: 0; background: transparent; }
-.template-meta_research .report-exhibit img { border: 0; border-radius: 0; }
-.template-meta_research .report-exhibit figcaption { padding: 8px 0 0; border: 0; background: transparent; color: #333b45; font-size: 11.5px; }
-.template-meta_research table { width: 100%; border-collapse: collapse; border-top: 2px solid #111827; border-bottom: 2px solid #111827; font-size: 11.5px; }
-.template-meta_research th, .template-meta_research td { padding: 7px 6px; border: 0; border-bottom: 1px solid #b8c0ca; text-align: left; }
-.template-meta_research th { background: transparent; color: #111827; font-weight: 760; }
-.template-meta_research .report-references { border-top: 1px solid #cfd4da; }
-.template-mckinsey { font-family: Arial, Helvetica, sans-serif; background: #f4f6f8; color: #1d252d; }
-.template-mckinsey .report-cover, .template-mckinsey .report-toc, .template-mckinsey .report-body, .template-mckinsey .report-references { padding-left: 24px; padding-right: 24px; }
-.template-mckinsey .report-cover { min-height: 520px; color: #fff; background-color: #062445; background-image: linear-gradient(115deg, rgba(38, 84, 255, .94), rgba(4, 26, 49, .94)), var(--cover-image, none); background-size: cover; background-position: center; align-content: start; }
-.template-mckinsey .report-logo-text { font-family: Georgia, "Times New Roman", serif; font-size: 25px; line-height: .98; font-weight: 500; white-space: pre-line; }
-.template-mckinsey .report-title-block h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(38px, 6vw, 70px); line-height: .98; font-weight: 500; color: #fff; max-width: 920px; }
-.template-mckinsey .report-kicker { color: rgba(255,255,255,.62); }
-.template-mckinsey .report-subtitle, .template-mckinsey .report-metadata, .template-mckinsey .report-metadata dt { color: rgba(255,255,255,.86); }
-.template-mckinsey .report-subtitle { font-size: 15px; }
-.template-mckinsey .report-metadata { display: flex; gap: 24px; align-items: flex-start; max-width: 760px; font-size: 11.5px; }
-.template-mckinsey .report-metadata div { display: inline-flex; gap: 8px; min-width: 132px; }
-.template-mckinsey .report-metadata dt, .template-mckinsey .report-metadata dd { white-space: nowrap; }
-.template-mckinsey a { color: #9be7ff; }
-.template-mckinsey .report-opening { margin-top: 24px; padding: 18px; background: rgba(255,255,255,.12); border-left: 6px solid #45c7ff; backdrop-filter: blur(4px); }
-.template-mckinsey .report-toc { background: #e9ecef; max-width: none; display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; }
-.template-mckinsey .report-body { max-width: 1000px; column-count: 2; column-gap: 38px; font-size: 12px; }
-.template-mckinsey .report-chapter { break-inside: avoid; margin-top: 42px; }
-.template-mckinsey .report-chapter-title { column-span: all; font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.02; margin-bottom: 22px; }
-.template-mckinsey .report-section-title { font-size: 14px; color: #0f3b66; }
-.template-mckinsey .report-exhibit { column-span: all; border: 0; border-top: 5px solid #2452ff; box-shadow: 0 18px 42px rgba(15,23,42,.12); }
-.template-mckinsey .report-exhibit figcaption { background: #0b1f38; color: #fff; border: 0; }
+.template-beacon_research { max-width: 1060px; margin: 0 auto; padding-top: 26px; box-sizing: border-box; font-family: "Optimistic Text", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; color: #1f2933; background: #fff; font-weight: 400; }
+.template-beacon_research h1, .template-beacon_research h2, .template-beacon_research h3, .template-beacon_research .report-logo-text, .template-beacon_research .report-kicker, .template-beacon_research .report-byline, .template-beacon_research .report-metadata { font-family: "Optimistic Display", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; }
+.template-beacon_research .report-cover { display: block; box-sizing: border-box; margin: 0 auto 26px; max-width: 1000px; padding: 28px 24px 26px; border: 0; border-radius: 14px; background: #f1f3f5; overflow: visible; }
+.template-beacon_research .report-brand-row { justify-content: flex-start; min-height: 32px; margin-bottom: 28px; }
+.template-beacon_research .report-logo { max-width: 128px; max-height: 38px; }
+.template-beacon_research .report-logo-text { display: inline-flex; align-items: center; gap: 10px; color: #111827; font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: 0; }
+.template-beacon_research .wordmark-emoji { font-size: 22px; line-height: 1; }
+.template-beacon_research .report-kicker { display: none; }
+.template-beacon_research .report-title-block h1 { max-width: 760px; margin: 0; font-size: clamp(16px, 2.5vw, 24px); line-height: 1.16; font-weight: 700; color: #050505; }
+.template-beacon_research .report-subtitle { max-width: 760px; margin-top: 12px; color: #3f4852; font-family: "Optimistic Text", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; font-size: 18px; line-height: 1.32; font-weight: 400; }
+.template-beacon_research .report-byline { margin-top: 18px; color: #111827; font-size: 16px; font-weight: 600; }
+.template-beacon_research .report-metadata { display: grid; gap: 5px; margin-top: 26px; color: #111827; font-size: 14px; }
+.template-beacon_research .report-metadata div { display: flex; gap: 7px; align-items: baseline; }
+.template-beacon_research .report-metadata dt { color: #050505; font-weight: 800; }
+.template-beacon_research .report-metadata dd { color: #27313b; }
+.template-beacon_research .report-opening { max-width: none; margin-top: 22px; padding: 0; border: 0; border-radius: 0; background: transparent; color: #39434d; font-family: "Optimistic Text", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; font-size: 10px; line-height: 1.28; font-weight: 400; }
+.template-beacon_research .report-opening h2 { display: none; }
+.template-beacon_research .report-opening p { margin: 0 0 5px; font-size: 10px; line-height: 1.28; text-align: justify; text-justify: inter-word; hyphens: auto; }
+.template-beacon_research .report-opening p:last-child { margin-bottom: 0; }
+.template-beacon_research .report-toc { display: none; }
+.template-beacon_research .report-body, .template-beacon_research .report-references { max-width: 1000px; padding-left: 17px; padding-right: 17px; font-family: "Optimistic Text", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; font-size: 12.5px; line-height: 1.45; font-weight: 400; }
+.template-beacon_research .report-body { padding-top: 0; }
+.template-beacon_research .report-body p, .template-beacon_research .report-body li, .template-beacon_research .report-references li { font-size: 12.5px; line-height: 1.45; font-weight: 400; text-align: justify; text-justify: inter-word; hyphens: auto; }
+.template-beacon_research .report-body strong, .template-beacon_research .report-references strong { font-weight: 600; }
+.template-beacon_research a { color: #0866ff; }
+.template-beacon_research .report-chapter { margin-top: 26px; }
+.template-beacon_research .report-chapter-title { margin-bottom: 12px; border: 0; padding-top: 0; color: #111827; font-family: "Optimistic Display", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; font-size: 21px; line-height: 1.14; font-weight: 700; }
+.template-beacon_research .report-section { margin-top: 18px; }
+.template-beacon_research .report-section-title { color: #111827; font-family: "Optimistic Display", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; font-size: 15.5px; line-height: 1.18; font-weight: 700; }
+.template-beacon_research .report-section-body p { margin-bottom: 9px; }
+.template-beacon_research .report-exhibit { margin: 26px auto; border: 0; background: transparent; }
+.template-beacon_research .report-exhibit img { border: 0; border-radius: 0; }
+.template-beacon_research .report-exhibit figcaption { padding: 8px 0 0; border: 0; background: transparent; color: #333b45; font-size: 11.5px; }
+.template-beacon_research table { width: 100%; border-collapse: collapse; border-top: 2px solid #111827; border-bottom: 2px solid #111827; font-size: 11.5px; }
+.template-beacon_research th, .template-beacon_research td { padding: 7px 6px; border: 0; border-bottom: 1px solid #b8c0ca; text-align: left; }
+.template-beacon_research th { background: transparent; color: #111827; font-weight: 760; }
+.template-beacon_research .report-references { border-top: 1px solid #cfd4da; }
+.template-vantage { font-family: Arial, Helvetica, sans-serif; background: #f4f6f8; color: #1d252d; }
+.template-vantage .report-cover, .template-vantage .report-toc, .template-vantage .report-body, .template-vantage .report-references { padding-left: 24px; padding-right: 24px; }
+.template-vantage .report-cover { min-height: 520px; color: #fff; background-color: #062445; background-image: linear-gradient(115deg, rgba(38, 84, 255, .94), rgba(4, 26, 49, .94)), var(--cover-image, none); background-size: cover; background-position: center; align-content: start; }
+.template-vantage .report-logo-text { font-family: Georgia, "Times New Roman", serif; font-size: 25px; line-height: .98; font-weight: 500; white-space: pre-line; }
+.template-vantage .report-title-block h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(38px, 6vw, 70px); line-height: .98; font-weight: 500; color: #fff; max-width: 920px; }
+.template-vantage .report-kicker { color: rgba(255,255,255,.62); }
+.template-vantage .report-subtitle, .template-vantage .report-metadata, .template-vantage .report-metadata dt { color: rgba(255,255,255,.86); }
+.template-vantage .report-subtitle { font-size: 15px; }
+.template-vantage .report-metadata { display: flex; gap: 24px; align-items: flex-start; max-width: 760px; font-size: 11.5px; }
+.template-vantage .report-metadata div { display: inline-flex; gap: 8px; min-width: 132px; }
+.template-vantage .report-metadata dt, .template-vantage .report-metadata dd { white-space: nowrap; }
+.template-vantage a { color: #9be7ff; }
+.template-vantage .report-opening { margin-top: 24px; padding: 18px; background: rgba(255,255,255,.12); border-left: 6px solid #45c7ff; backdrop-filter: blur(4px); }
+.template-vantage .report-toc { background: #e9ecef; max-width: none; display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; }
+.template-vantage .report-body { max-width: 1000px; column-count: 2; column-gap: 38px; font-size: 12px; }
+.template-vantage .report-chapter { break-inside: avoid; margin-top: 42px; }
+.template-vantage .report-chapter-title { column-span: all; font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.02; margin-bottom: 22px; }
+.template-vantage .report-section-title { font-size: 14px; color: #0f3b66; }
+.template-vantage .report-exhibit { column-span: all; border: 0; border-top: 5px solid #2452ff; box-shadow: 0 18px 42px rgba(15,23,42,.12); }
+.template-vantage .report-exhibit figcaption { background: #0b1f38; color: #fff; border: 0; }
 .template-iclr { font-family: Georgia, "Times New Roman", serif; color: #111; background: #fff; }
 .template-iclr .report-cover, .template-iclr .report-toc, .template-iclr .report-body, .template-iclr .report-references { padding-left: 18px; padding-right: 18px; }
 .template-iclr .report-cover { max-width: 900px; margin: 0 auto; padding-top: 32px; text-align: center; border-bottom: 1px solid #d8d8d8; }
@@ -184,18 +184,18 @@ body.rich-report-page { margin: 0; padding: 0; max-width: none; background: #f3f
 .template-ieee_acm a { color: #111; }
 @media (max-width: 760px) {
   .report-cover, .report-toc, .report-body, .report-references { padding-left: 22px; padding-right: 22px; }
-  .template-mckinsey .report-cover { min-height: 520px; }
-  .template-mckinsey .report-body, .template-ieee_acm .report-body { column-count: 1; }
-  .template-mckinsey .report-toc { display: block; }
-  .template-mckinsey .report-chapter-title { font-size: 36px; }
+  .template-vantage .report-cover { min-height: 520px; }
+  .template-vantage .report-body, .template-ieee_acm .report-body { column-count: 1; }
+  .template-vantage .report-toc { display: block; }
+  .template-vantage .report-chapter-title { font-size: 36px; }
 }
 """
 
 
 REPORT_TEMPLATES: dict[str, dict[str, Any]] = {
-    "mckinsey": {
-        "id": "mckinsey",
-        "name": "McKinsey",
+    "vantage": {
+        "id": "vantage",
+        "name": "Vantage",
         "description": "Executive report with strong hierarchy, dense exhibits, and restrained consulting-style typography.",
         "layout_id": "consulting-report",
         "cover_treatment": "dark-blue-cover",
@@ -306,13 +306,13 @@ img { max-width: 96%; display: block; margin: 13px auto 7px; }
 em { color: #4b5563; }
 """,
     },
-    "meta_research": {
-        "id": "meta_research",
-        "name": "Meta Research",
+    "beacon_research": {
+        "id": "beacon_research",
+        "name": "Beacon Research",
         "description": "Meta paper-inspired front matter with gray abstract panel, Meta-like wordmark treatment, and compact research typography.",
         "layout_id": "meta-paper",
         "cover_treatment": "gray-paper-front-matter",
-        "opening_block": "meta-paper-abstract",
+        "opening_block": "beacon-paper-abstract",
         "body_flow": "paper-single-column",
         "figure_treatment": "paper-figure",
         "table_treatment": "paper-horizontal-rules",
@@ -321,7 +321,7 @@ em { color: #4b5563; }
         "font_stack": "'Optimistic Text', 'Meta Sans', 'Challenger Inter', Inter, 'Helvetica Neue', Arial, sans-serif",
         "heading_font_stack": "'Optimistic Display', 'Meta Sans', 'Challenger Inter', Inter, Arial, Helvetica, sans-serif",
         "body_font_stack": "'Optimistic Text', 'Meta Sans', 'Challenger Inter', Inter, 'Helvetica Neue', Arial, sans-serif",
-        "summary_block": "meta-paper-abstract",
+        "summary_block": "beacon-paper-abstract",
         "toc_depth": 2,
         "chapter_numbering": True,
         "max_width": "900px",
@@ -329,19 +329,19 @@ em { color: #4b5563; }
         "fontsize": "10pt",
         "css": """
 @page { size: A4; margin: 0.45in 0.38in 0.48in; }
-body { font-family: "Optimistic Text", "Meta Sans", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; color: #1f2933; background: #ffffff; max-width: 1000px; margin: 0 auto; padding: 40px 17px 64px; font-weight: 400; }
-h1, h2, h3 { font-family: "Optimistic Display", "Meta Sans", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; }
+body { font-family: "Optimistic Text", "Challenger Inter", Inter, "Helvetica Neue", Arial, sans-serif; color: #1f2933; background: #ffffff; max-width: 1000px; margin: 0 auto; padding: 40px 17px 64px; font-weight: 400; }
+h1, h2, h3 { font-family: "Optimistic Display", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; }
 h1 { font-size: 30px; line-height: 1.08; color: #050505; margin: 0 0 14px; font-weight: 700; }
-h1 + p, .report-kicker { color: #65676b; font-family: "Optimistic Display", "Meta Sans", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; font-size: 11.5px; }
+h1 + p, .report-kicker { color: #65676b; font-family: "Optimistic Display", "Challenger Inter", Inter, Arial, Helvetica, sans-serif; font-size: 11.5px; }
 h2 { font-size: 21px; color: #111827; margin-top: 28px; padding-top: 0; border-top: 0; font-weight: 700; }
 h3 { font-size: 15.5px; color: #111827; margin-top: 18px; font-weight: 700; }
 p, li { font-size: 12.5px; line-height: 1.45; font-weight: 400; text-align: justify; text-justify: inter-word; hyphens: auto; }
 strong { font-weight: 600; }
-.template-summary-box, .meta-summary-box { background: #f1f3f5; border: 0; border-radius: 14px; padding: 26px 28px; margin: 32px 0; }
-.template-summary-box h2, .meta-summary-box h2 { border: 0; margin-top: 0; padding-top: 0; color: #050505; }
-.template-summary-box strong, .meta-summary-box strong { color: #111827; }
-.meta-paper-abstract { background: #f1f3f5; border-radius: 14px; padding: 24px 28px; margin: 28px 0; color: #39434d; }
-.template-meta_research .meta-paper-abstract p { font-size: 10px; line-height: 1.28; }
+.template-summary-box, .beacon-summary-box { background: #f1f3f5; border: 0; border-radius: 14px; padding: 26px 28px; margin: 32px 0; }
+.template-summary-box h2, .beacon-summary-box h2 { border: 0; margin-top: 0; padding-top: 0; color: #050505; }
+.template-summary-box strong, .beacon-summary-box strong { color: #111827; }
+.beacon-paper-abstract { background: #f1f3f5; border-radius: 14px; padding: 24px 28px; margin: 28px 0; color: #39434d; }
+.template-beacon_research .beacon-paper-abstract p { font-size: 10px; line-height: 1.28; }
 .report-toc { display: none; }
 img { max-width: 100%; display: block; margin: 18px auto 7px; border: 0; border-radius: 0; }
 table { width: 100%; border-collapse: collapse; border-top: 2px solid #111827; border-bottom: 2px solid #111827; font-size: 11.5px; }
@@ -784,11 +784,11 @@ def render_structured_report_markdown(structure: dict[str, Any], template: dict[
     summary_items = structure.get("summary_items") or []
     if summary_items:
         classes = "template-summary-box"
-        if template["id"] == "meta_research":
-            classes += " meta-summary-box"
+        if template["id"] == "beacon_research":
+            classes += " beacon-summary-box"
         parts.extend([f'::: {{class="{classes}"}}', "", "## Opening Summary", ""])
         for item in summary_items:
-            if template["id"] == "meta_research":
+            if template["id"] == "beacon_research":
                 parts.append(str(item.get("opening_summary") or item["summary"]))
                 parts.append("")
             else:
@@ -1144,7 +1144,7 @@ def full_template_css(template: dict[str, Any], template_assets: dict[str, Any] 
 
 def prepare_template_assets(template: dict[str, Any], image_mode: str, asset_dir: Path | None) -> dict[str, Any]:
     assets: dict[str, Any] = {"font_css": "", "warnings": []}
-    if template["id"] != "meta_research":
+    if template["id"] != "beacon_research":
         return assets
 
     if not any(font_family_available(font) for font in META_FONT_CANDIDATES):
@@ -1271,18 +1271,18 @@ def render_rich_cover(structure: dict[str, Any], template: dict[str, Any]) -> st
 def render_logo_html(metadata: dict[str, str], template: dict[str, Any]) -> str:
     if metadata.get("logo_ref"):
         return f'<img class="report-logo" src="{html_attr(metadata["logo_ref"])}" alt="{html_attr(metadata.get("organization") or "Report logo")}">'
-    if template["id"] == "meta_research":
+    if template["id"] == "beacon_research":
         return f'<div class="report-logo-text challenger-wordmark"><span class="wordmark-emoji" aria-hidden="true">🤿</span><span>{html_text(PRODUCT_NAME)}</span></div>'
-    label = metadata.get("organization") or ("Strategy report" if template["id"] == "mckinsey" else "Research report")
-    if template["id"] == "mckinsey" and metadata.get("organization"):
+    label = metadata.get("organization") or ("Strategy report" if template["id"] == "vantage" else "Research report")
+    if template["id"] == "vantage" and metadata.get("organization"):
         label = metadata["organization"].replace(" & ", "\n& ")
     return f'<div class="report-logo-text">{html_text(label)}</div>'
 
 
 def report_kicker(template: dict[str, Any]) -> str:
     return {
-        "mckinsey": "Executive report",
-        "meta_research": "Research paper",
+        "vantage": "Executive report",
+        "beacon_research": "Research paper",
         "iclr": "Research paper",
         "neurips": "Research paper",
         "nature_review": "Review report",
@@ -1310,8 +1310,8 @@ def render_opening_summary_html(structure: dict[str, Any], template: dict[str, A
     items = structure.get("summary_items") or []
     if not items:
         return ""
-    if template["id"] == "meta_research":
-        rows = ['<section class="report-opening meta-paper-abstract">']
+    if template["id"] == "beacon_research":
+        rows = ['<section class="report-opening beacon-paper-abstract">']
         for item in items:
             summary = str(item.get("opening_summary") or item.get("summary") or "").strip()
             if summary:
@@ -1532,10 +1532,10 @@ def pdf_safe_html(html: str) -> str:
     cleaned = re.sub(r"@media\s*\(max-width:\s*760px\)\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}", "", cleaned, flags=re.S)
     override = """
 <style>
-.template-mckinsey .report-cover { min-height: auto; }
-.template-mckinsey .report-body, .template-ieee_acm .report-body { max-width: 980px; }
-.template-mckinsey .report-toc { display: block; }
-.template-mckinsey .report-chapter-title { font-size: 30px; line-height: 1.04; }
+.template-vantage .report-cover { min-height: auto; }
+.template-vantage .report-body, .template-ieee_acm .report-body { max-width: 980px; }
+.template-vantage .report-toc { display: block; }
+.template-vantage .report-chapter-title { font-size: 30px; line-height: 1.04; }
 .report-cover, .report-toc, .report-body, .report-references { overflow-wrap: anywhere; }
 </style>
 """
