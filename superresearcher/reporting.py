@@ -704,7 +704,7 @@ def build_report_structure(corpus: Path, image_mode: str = "canonical", asset_di
         "corpus": {"id": corpus.name, "path": str(corpus)},
         "metadata": report_metadata,
         "groups": groups,
-        "summary_items": summary_items_from_groups(groups),
+        "summary_items": summary_items_for_structure(corpus, groups),
         "source_index": source_index,
         "fallback_markdown": strip_existing_source_index(paper_path.read_text(encoding="utf-8", errors="replace")).strip() if not groups else "",
         "unassigned_visual_lines": unassigned_visual_lines,
@@ -779,8 +779,10 @@ def render_structured_report_markdown(structure: dict[str, Any], template: dict[
         meta_line.append(metadata["date"])
     if metadata.get("website"):
         meta_line.append(metadata["website"])
-    meta_line.append(f"Prepared from {PRODUCT_NAME} compile artifacts.")
-    parts.extend([f"_{' | '.join(meta_line)}_", ""])
+    # Byline carries title/author facts only — no internal product codename
+    # or process language (lint gate, 2026-10-29).
+    if meta_line:
+        parts.extend([f"_{' | '.join(meta_line)}_", ""])
     summary_items = structure.get("summary_items") or []
     if summary_items:
         classes = "template-summary-box"
@@ -822,6 +824,23 @@ def render_structured_report_markdown(structure: dict[str, Any], template: dict[
     append_references(final_parts, references)
     markdown = re.sub(r"\n{3,}", "\n\n", "\n".join(part for part in final_parts if part is not None)).strip() + "\n"
     return markdown
+
+
+def summary_items_for_structure(corpus: Path, groups: list[dict[str, Any]]) -> list[dict[str, str]]:
+    """Prefer the fresh summary-stage override over stitched section openings.
+
+    ``superresearcher.summary_stage`` writes ``atlas/publish/opening_summary.md``
+    after compile; when present it is the Opening Summary. Otherwise fall
+    back to the legacy behaviour (summaries stitched from section openings).
+    """
+    from .summary_stage import summary_override_path
+
+    override = summary_override_path(corpus)
+    if override.exists():
+        text = override.read_text(encoding="utf-8", errors="replace").strip()
+        if text:
+            return [{"title": "Overview", "summary": text, "opening_summary": text}]
+    return summary_items_from_groups(groups)
 
 
 def summary_items_from_groups(groups: list[dict[str, Any]]) -> list[dict[str, str]]:
@@ -1036,15 +1055,27 @@ def strip_existing_source_index(markdown: str) -> str:
 def render_reference_list_item(reference: dict[str, Any]) -> str:
     source = reference.get("source") or {}
     source_id = str(reference.get("source_id") or "").strip()
-    title = clean_reference_text(source.get("title") or f"Source S{source_id}")
-    publisher = clean_reference_text(source.get("publisher") or "")
-    url = clean_reference_url(source.get("url") or "")
+    bib = source.get("bib") or {}
+    if bib:
+        # Enriched bibliography (superresearcher.bibliography): real authors,
+        # title, venue, year, DOI/URL. Never a raw filename.
+        from .bibliography import format_reference
+
+        return format_reference(bib, reference["number"], reference["anchor_id"], source_id)
+    title = clean_reference_text(source.get("bib_title") or source.get("title") or f"Source S{source_id}")
+    # Hard rule (2026-10-29): a reference may never render a raw filename.
+    from .bibliography import humanize_slug, looks_like_filename
+
+    if looks_like_filename(title):
+        title = humanize_slug(title)
+    publisher = clean_reference_text(source.get("bib_publisher") or source.get("publisher") or "")
+    url = clean_reference_url(source.get("bib_url") or source.get("url") or "")
     source_type = clean_reference_text(source.get("source_type") or "")
     title_part = f"[{escape_markdown_link_text(title)}](<{url}>)" if url else escape_markdown_link_text(title)
     details = [title_part]
     if publisher and publisher != "unknown":
         details.append(publisher)
-    if source_type and source_type != "unknown":
+    if source_type and source_type not in {"unknown", "markdown"}:
         details.append(source_type)
     if source_id:
         details.append(f"Source S{source_id}")

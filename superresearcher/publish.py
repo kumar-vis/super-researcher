@@ -557,6 +557,7 @@ Rules:
 - Use only the provided source chunks as factual evidence.
 - Cite factual claims with local inline citations like [S0001:C0003].
 - Do not repeat prior sections; use the continuity summary only for flow.
+- The continuity summary carries a "Facts already used" ledger: facts, anecdotes, and named examples already told in earlier sections. Do NOT re-tell any ledger item — at most one passing clause may reference it. Tell only what is new in this section.
 - Write polished Markdown for this section only.
 - Follow the user's section customization request if present.
 - {DENSITY_GUIDANCE}
@@ -600,7 +601,8 @@ def render_prompt_chunk(chunk: dict[str, Any]) -> str:
 def update_continuity_summary(llm: LLMClient, previous_summary: str, plan_section: dict[str, Any], section_markdown: str) -> str:
     prompt = f"""Compact the running paper summary for continuity.
 
-Keep the summary under 900 words. Preserve flow, key findings, unresolved tensions, and facts that later sections should not repeat.
+Keep the narrative part of the summary under 600 words. Preserve flow, key findings, and unresolved tensions.
+End the summary with a section headed "Facts already used" — a bullet list of the specific facts, anecdotes, named examples, and case stories told so far (one line each, concrete: names, dates, numbers). The ledger is EXEMPT from the word cap: carry forward every earlier ledger entry and add this section's. Later writers are forbidden from re-telling ledger items.
 {DENSITY_GUIDANCE}
 
 Previous summary:
@@ -611,10 +613,13 @@ New section:
 {section_markdown[:20000]}
 """
     try:
-        return llm.text_call(prompt).strip()[:7000]
+        # 14000 chars: the facts-used ledger grows with every section and
+        # sits at the end of the summary — a 7000-char cap silently
+        # amputates the newest ledger entries (observed in the v2 run).
+        return llm.text_call(prompt).strip()[:14000]
     except Exception:
         fallback = f"{previous_summary}\n\n{plan_section['title']}: {strip_markdown(section_markdown)[:1200]}".strip()
-        return fallback[-7000:]
+        return fallback[-14000:]
 
 
 def write_final_paper(corpus: Path, plan: dict[str, Any], state: dict[str, Any], source_index: dict[str, Any]) -> None:
